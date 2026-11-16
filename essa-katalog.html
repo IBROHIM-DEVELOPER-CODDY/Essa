@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESSA Parfume — 3D katalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --serif:"Cormorant Garamond","Playfair Display",Georgia,"Times New Roman",serif;
+  --sans:"Jost","Helvetica Neue",Arial,sans-serif;
+  --g1:#f6dc9b; --g2:#cf9f45; --g3:#8c5f1f;
+  --gold:linear-gradient(120deg,var(--g1) 0%,var(--g2) 45%,var(--g3) 70%,var(--g2) 100%);
+}
+:root[data-theme="dark"]{--bg:#0a0807;--bg2:#15100b;--fg:#f5ecdc;--mut:#ad9e85;--line:rgba(214,172,92,.22);--panel:#17110b;--glow:rgba(214,160,70,.24);--chip:rgba(214,172,92,.1);--head:rgba(10,8,7,.9)}
+:root[data-theme="light"]{--bg:#f8f2e7;--bg2:#efe5d1;--fg:#1d160c;--mut:#6e5e44;--line:rgba(140,98,28,.28);--panel:#fffaf0;--glow:rgba(205,150,55,.3);--chip:rgba(160,110,30,.1);--head:rgba(248,242,231,.92);--g1:#dcae55;--g2:#a9761f;--g3:#6b4510}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{font-family:var(--sans);color:var(--fg);background:linear-gradient(180deg,var(--bg),var(--bg2) 60%,var(--bg));min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body.modal-open{overflow:hidden}
+.vc{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+
+header{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px clamp(16px,4vw,48px);background:var(--head);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+.brand svg{width:38px;height:38px}
+.brand b{font:600 22px/1 var(--serif);letter-spacing:.22em}
+.brand small{display:block;font:400 9px/1 var(--sans);letter-spacing:.5em;color:var(--mut);margin-top:5px}
+nav{display:flex;gap:26px}
+nav a{color:var(--fg);text-decoration:none;font-size:14px;opacity:.8;position:relative;padding:6px 0;transition:opacity .3s}
+nav a:hover{opacity:1}
+nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+nav a:hover::after{transform:scaleX(1)}
+.tools{display:flex;gap:10px;align-items:center}
+.seg{display:flex;border:1px solid var(--line);border-radius:99px;padding:3px;background:var(--chip)}
+.seg button{border:0;background:none;color:var(--mut);font:500 12px var(--sans);padding:6px 11px;border-radius:99px;cursor:pointer;transition:background .3s,color .3s}
+.seg button.on{background:var(--gold);color:#1b1206}
+.themeBtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--chip);color:var(--fg);cursor:pointer;display:grid;place-items:center}
+.themeBtn svg{width:18px;height:18px}
+[data-theme="dark"] .sun{display:block}[data-theme="dark"] .moon{display:none}
+[data-theme="light"] .sun{display:none}[data-theme="light"] .moon{display:block}
+
+.hero{min-height:100vh;min-height:100svh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:2vw;padding:110px clamp(18px,5vw,72px) 40px}
+.hero h1{font:600 clamp(46px,7.4vw,108px)/.95 var(--serif);letter-spacing:-.01em}
+.hero h1 span{display:block}
+.shine{background:var(--gold);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:-220% 0}}
+.hero p{margin-top:26px;max-width:46ch;color:var(--mut);font-size:17px;line-height:1.65;font-weight:300}
+.cta{display:inline-flex;margin-top:34px;padding:15px 32px;border-radius:99px;background:var(--gold);color:#1b1206;text-decoration:none;font:500 15px var(--sans);transition:transform .3s}
+.cta:hover{transform:translateY(-3px)}
+.heroView{position:relative;height:min(76vh,700px);min-height:400px;touch-action:pan-y;cursor:grab;background:radial-gradient(closest-side at 50% 58%,var(--glow),transparent 74%)}
+.heroCap{position:absolute;left:0;right:0;bottom:-2px;text-align:center;font:italic 500 22px var(--serif);pointer-events:none}
+.heroCap small{display:block;font:300 12px var(--sans);color:var(--mut);margin-top:4px;font-style:normal}
+
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;background:var(--chip)}
+.marquee div{display:flex;gap:56px;width:max-content;animation:mq 50s linear infinite;font:italic 500 26px var(--serif);color:var(--mut);will-change:transform}
+.marquee i{color:var(--g2);font-style:normal}
+@keyframes mq{to{transform:translate3d(-50%,0,0)}}
+
+section{padding:clamp(60px,9vw,120px) clamp(16px,5vw,72px)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.head h2{font:600 clamp(34px,5vw,64px)/1 var(--serif)}
+.head p{color:var(--mut);margin-top:10px;font-weight:300}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line);background:var(--chip);color:var(--fg);font:400 13px var(--sans);padding:8px 16px;border-radius:99px;cursor:pointer;transition:border-color .3s}
+.chips button:hover{border-color:var(--g2)}
+.chips button.on{background:var(--gold);color:#1b1206;border-color:transparent}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px}
+.card{position:relative;border-radius:30px;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column;background:var(--panel);transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .35s}
+.card:hover{transform:translate3d(0,-6px,0);border-color:var(--g2)}
+.card.hide{display:none}
+.view{position:relative;aspect-ratio:4/4.5;touch-action:pan-y;cursor:grab;
+  background:radial-gradient(closest-side at 50% 64%,var(--glow),transparent 78%)}
+.view:active{cursor:grabbing}
+.tag{position:absolute;top:16px;left:18px;font:italic 500 18px var(--serif);color:var(--g2);z-index:2}
+.drag{position:absolute;top:18px;right:18px;font-size:11px;color:var(--mut);z-index:2}
+.info{padding:22px 22px 24px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:16px;flex:1}
+.info em{font:italic 500 16px var(--serif);color:var(--g2)}
+.info h3{font:600 30px/1.05 var(--serif);margin-top:2px}
+.notes{display:grid;gap:9px}
+.notes div{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:baseline;font-size:13px}
+.notes dt{color:var(--mut);font-weight:300}
+.notes dd{display:flex;flex-wrap:wrap;gap:5px}
+.notes span{background:var(--chip);border:1px solid var(--line);border-radius:99px;padding:3px 10px;font-size:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font:300 12px var(--sans);color:var(--mut);text-align:left;padding-bottom:6px}
+td{padding:8px 0;border-top:1px solid var(--line)}
+td:last-child,th:last-child{text-align:right}
+td:last-child{font:600 19px var(--serif);color:var(--g2)}
+
+.search{position:relative;max-width:420px;width:100%}
+.search input{width:100%;padding:14px 20px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:400 15px var(--sans);outline:none}
+.search input:focus{border-color:var(--g2)}
+.count{color:var(--mut);font-size:13px;margin:0 0 18px;min-height:1em}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:0 28px}
+.list button{display:flex;gap:12px;align-items:baseline;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;color:var(--fg);padding:11px 4px;font:400 14px var(--sans);cursor:pointer;content-visibility:auto;contain-intrinsic-size:auto 44px}
+.list button b{font:italic 600 15px var(--serif);color:var(--g2);min-width:34px}
+.list button span{transition:transform .3s,color .3s}
+.list button:hover span{transform:translate3d(8px,0,0);color:var(--g2)}
+.none{padding:40px 0;color:var(--mut)}
+
+.modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:color-mix(in srgb,var(--bg) 90%,transparent)}
+.modal.open{display:grid;animation:fade .3s}
+@keyframes fade{from{opacity:0}}
+.mbox{width:min(920px,94vw);max-height:92vh;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:34px;overflow:hidden;background:var(--panel)}
+.mview{position:relative;min-height:420px;touch-action:pan-y;cursor:grab;background:radial-gradient(closest-side at 50% 60%,var(--glow),transparent 78%)}
+.mtext{padding:36px;display:flex;flex-direction:column;justify-content:center;gap:16px}
+.mtext em{font:italic 600 26px var(--serif);color:var(--g2)}
+.mtext h3{font:600 clamp(28px,4vw,42px)/1.05 var(--serif)}
+.mtext p{color:var(--mut);line-height:1.6;font-weight:300}
+.mtext a{color:var(--fg);font:600 26px var(--serif);text-decoration:none}
+.close{position:absolute;top:18px;right:18px;z-index:130;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-size:22px;cursor:pointer}
+
+footer{border-top:1px solid var(--line);padding:56px clamp(16px,5vw,72px) 70px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;background:var(--chip)}
+footer h4{font:600 34px var(--serif)}
+footer p{color:var(--mut);margin-top:8px;font-weight:300}
+footer .links{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+footer a{color:var(--fg);text-decoration:none;font-size:18px;border-bottom:1px solid var(--line)}
+footer a:hover{color:var(--g2)}
+:focus-visible{outline:2px solid var(--g2);outline-offset:3px}
+@media (max-width:860px){
+  nav{display:none}
+  .hero{grid-template-columns:1fr;padding-top:96px}
+  .heroView{height:58vh}
+  .mbox{grid-template-columns:1fr;overflow:auto}
+  .mview{min-height:320px;height:42vh}
+  footer{grid-template-columns:1fr}
+  .brand small{display:none}
+}
+@media (max-width:520px){.seg button{padding:6px 8px}.brand b{font-size:18px}.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:34px}.row .cta{margin-top:0}
+.ghost{display:inline-flex;gap:8px;align-items:center;padding:14px 26px;border-radius:99px;border:1px solid var(--g2);background:transparent;color:var(--fg);font:500 15px var(--sans);cursor:pointer;transition:background .3s,color .3s}
+.ghost:hover{background:var(--gold);color:#1b1206;border-color:transparent}
+.ghost svg,.sprayBtn svg{width:18px;height:18px}
+.vwrap{position:relative}
+.sprayBtn{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:3;display:inline-flex;gap:8px;align-items:center;padding:9px 18px;border-radius:99px;border:1px solid var(--g2);background:var(--panel);color:var(--fg);font:500 13px var(--sans);cursor:pointer;white-space:nowrap;transition:background .3s,color .3s}
+.sprayBtn:hover,.sprayBtn:active{background:var(--gold);color:#1b1206;border-color:transparent}
+.view::before,.heroView::before,.mview::before{content:"";position:absolute;inset:0;background:radial-gradient(closest-side at 50% 38%,var(--ac,transparent),transparent 80%);opacity:0;transition:opacity .7s;pointer-events:none}
+.sprayed::before{opacity:1}
+.fxname{position:absolute;left:50%;top:46px;transform:translateX(-50%);font:italic 600 22px var(--serif);color:var(--g2);opacity:0;transition:opacity .5s;pointer-events:none;white-space:nowrap;z-index:2}
+.fxname.show{opacity:1}
+.desc{font:400 14.5px/1.55 var(--sans);opacity:.92}
+.orig{font-size:13px;color:var(--mut);line-height:1.55;border-left:2px solid var(--g2);padding-left:11px}
+.orig b{display:block;font:italic 600 15px var(--serif);color:var(--g2)}
+.notes span{transition:box-shadow .7s,border-color .7s,background .7s}
+.notes dt{transition:color .7s}
+.notes div.lit span{border-color:var(--g2);box-shadow:0 0 14px var(--glow);background:var(--chip)}
+.notes div.lit dt{color:var(--g2)}
+.themeBtn.off .wave{display:none}.themeBtn.off .slash{display:block!important}
+.mtext .orig{margin-top:2px}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#top" aria-label="ESSA Parfume">
+    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6dc9b"/><stop offset=".5" stop-color="#c8963e"/><stop offset="1" stop-color="#7d5319"/></linearGradient></defs>
+      <path d="M14 5H37V9.5H19.5V21H35V25.5H19.5V38.5H37V43H14Z" fill="url(#lg)"/>
+      <path d="M39 13C20 10 11 23 25 25C39 27 29 39 9 36" stroke="url(#lg)" stroke-width="3.4" stroke-linecap="round"/>
+    </svg>
+    <div><b>ESSA</b><small>PARFUME</small></div>
+  </a>
+  <nav>
+    <a href="#featured" data-i="nav1"></a>
+    <a href="#all" data-i="nav2"></a>
+    <a href="#contact" data-i="nav3"></a>
+  </nav>
+  <div class="tools">
+    <div class="seg" id="langs" role="group" aria-label="Til">
+      <button data-l="uz" class="on">UZ</button><button data-l="ru">RU</button><button data-l="en">EN</button>
+    </div>
+    <button class="themeBtn" id="snd" aria-label="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path class="wave" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/><path class="slash" d="M16 9l5 6M21 9l-5 6" style="display:none"/></svg></button>
+    <button class="themeBtn" id="theme" aria-label="Dark / Light">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div>
+      <h1><span data-i="h1a"></span><span class="shine" data-i="h1b"></span></h1>
+      <p data-i="heroSub"></p>
+      <div class="row"><a class="cta" href="#featured" data-i="cta"></a><button class="ghost" id="heroSpray"><span class="ic"></span><span data-i="spray"></span></button></div>
+    </div>
+    <div class="heroView" id="heroView">
+      <div class="heroCap" id="heroCap"></div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+  <section id="featured">
+    <div class="head">
+      <div><h2 data-i="featT"></h2><p data-i="featS"></p></div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="all">
+    <div class="head">
+      <div><h2 data-i="fullT"></h2><p id="fullS"></p></div>
+      <div class="search"><input id="q" type="search" data-ip="search" autocomplete="off"></div>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="list" id="list"></div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div>
+    <h4>ESSA Parfume</h4>
+    <p data-i="foot1"></p>
+    <p data-i="foot2"></p>
+  </div>
+  <div class="links">
+    <a href="tel:+998900002838">90-000-28-38</a>
+    <a href="https://t.me/ESSAparfume" target="_blank" rel="noopener">t.me/ESSAparfume</a>
+    <a href="https://instagram.com/essa_parfume" target="_blank" rel="noopener">@essa_parfume</a>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <button class="close" id="mclose" aria-label="Close">×</button>
+  <div class="mbox">
+    <div class="mview" id="mview"></div>
+    <div class="mtext">
+      <em id="mno"></em>
+      <h3 id="mname"></h3>
+      <p data-i="mInfo"></p>
+      <p class="orig" id="mcountry" hidden></p>
+      <button class="ghost" id="mspray"><span class="ic"></span><span data-i="spray"></span></button>
+      <a href="tel:+998900002838">90-000-28-38</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ------------------------------------------------------------------ DATA */
+const L={
+uz:{nav1:"Tanlangan hidlar",nav2:"To'liq ro'yxat",nav3:"Aloqa",
+ h1a:"Har bir hid",h1b:"alohida hikoya",
+ heroSub:"Sifatli hidlar siz uchun. Extrait parfumelar katalogi: brendga emas — hidga to'lov. Har bir flakonni 3D da aylantirib ko'ring.",
+ cta:"Katalogni ko'rish",drag:"suring",
+ featT:"Tanlangan hidlar",featS:"Hid notalari va narxlari bilan",
+ top:"Yuqori notalar",mid:"O'rta notalar",base:"Asosiy notalar",vol:"Hajm",price:"Narx",som:"so'm",all:"Barchasi",
+ fullT:"To'liq katalog",fullS:"{n} ta hid",search:"Hid nomini qidiring…",res:"ta natija",none:"Hech narsa topilmadi. Boshqa nom yozib ko'ring.",
+ mInfo:"Bu hid haqida batafsil ma'lumot va narxni bilish uchun biz bilan bog'laning.",no:"Raqami",
+ foot1:"Katalog faqat ko'rish uchun. Buyurtma va savollar uchun bog'laning.",foot2:"Brendga emas — hidga to'lov."},
+ru:{nav1:"Избранные ароматы",nav2:"Полный список",nav3:"Контакты",
+ h1a:"Каждый аромат —",h1b:"отдельная история",
+ heroSub:"Качественные ароматы для вас. Каталог экстрактных духов: платите за аромат, а не за бренд. Вращайте каждый флакон в 3D.",
+ cta:"Смотреть каталог",drag:"вращайте",
+ featT:"Избранные ароматы",featS:"С нотами и ценами",
+ top:"Верхние ноты",mid:"Ноты сердца",base:"Базовые ноты",vol:"Объём",price:"Цена",som:"сум",all:"Все",
+ fullT:"Полный каталог",fullS:"{n} ароматов",search:"Найдите аромат по названию…",res:"результатов",none:"Ничего не найдено. Попробуйте другое название.",
+ mInfo:"Чтобы узнать подробности об этом аромате и цену, свяжитесь с нами.",no:"Номер",
+ foot1:"Каталог только для просмотра. Заказы и вопросы — по контактам.",foot2:"Платите за аромат, а не за бренд."},
+en:{nav1:"Featured scents",nav2:"Full list",nav3:"Contact",
+ h1a:"Every scent is",h1b:"a story of its own",
+ heroSub:"Quality fragrances for you. A catalog of extrait perfumes: pay for the scent, not the brand. Spin every bottle in 3D.",
+ cta:"Browse the catalog",drag:"drag",
+ featT:"Featured scents",featS:"With notes and prices",
+ top:"Top notes",mid:"Heart notes",base:"Base notes",vol:"Size",price:"Price",som:"UZS",all:"All",
+ fullT:"Full catalog",fullS:"{n} fragrances",search:"Search by name…",res:"results",none:"Nothing found. Try a different name.",
+ mInfo:"For details and the price of this fragrance, get in touch with us.",no:"No.",
+ foot1:"This catalog is for browsing only. For orders and questions, contact us.",foot2:"Pay for the scent, not the brand."}
+};
+/* note translations: uz -> [ru, en] */
+const NT={
+"Bergamot":["Бергамот","Bergamot"],"Limon":["Лимон","Lemon"],"Qora qalampir":["Чёрный перец","Black pepper"],"Vetiver":["Ветивер","Vetiver"],
+"Tutun":["Табак","Tobacco"],"Zira":["Зира","Cumin"],"Teri":["Кожа","Leather"],"Paçuli":["Пачули","Patchouli"],"Patchuli":["Пачули","Patchouli"],
+"Patchouli":["Пачули","Patchouli"],"Tamaki":["Табак","Tobacco"],"Dengiz tuzi":["Морская соль","Sea salt"],"Yasemin":["Жасмин","Jasmine"],
+"Jasmin":["Жасмин","Jasmine"],"Jasmine":["Жасмин","Jasmine"],"Yasmin":["Жасмин","Jasmine"],"Gardeniya":["Гардения","Gardenia"],"Geokran":["Геокран","Geokran"],
+"Ambergris":["Серая амбра","Ambergris"],"Oq mox":["Белый мох","White moss"],"Qahva":["Кофе","Coffee"],"Qora qahva":["Чёрный кофе","Black coffee"],
+"Qora smorodina":["Чёрная смородина","Blackcurrant"],"Rose":["Роза","Rose"],"Atirgul":["Роза","Rose"],"Vanil":["Ваниль","Vanilla"],"Ambroksan":["Амброксан","Ambroxan"],
+"Madagaskar vanili":["Мадагаскарская ваниль","Madagascar vanilla"],"Apelsin":["Апельсин","Orange"],"Dolchin":["Корица","Cinnamon"],"Doljin":["Корица","Cinnamon"],
+"Tonka loviya":["Бобы тонка","Tonka bean"],"Rosacea atirgulli":["Розовые цветы","Rosaceae blooms"],"Sandal daraxti":["Сандал","Sandalwood"],"Sandal yog'ochi":["Сандал","Sandalwood"],
+"Musk":["Мускус","Musk"],"Mushk":["Мускус","Musk"],"Mashk":["Мускус","Musk"],"Muskus":["Мускус","Musk"],"Oq musk":["Белый мускус","White musk"],
+"Yashil barglar":["Зелёные листья","Green leaves"],"Mandarin":["Мандарин","Mandarin"],"Oud":["Уд","Oud"],"Ağar daraxti":["Агаровое дерево","Agarwood"],
+"Amber":["Амбра","Amber"],"Kon'yak":["Коньяк","Cognac"],"Ziravorlar":["Специи","Spices"],"Eman":["Дуб","Oak"],"Karamel":["Карамель","Caramel"],"Karaamel":["Карамель","Caramel"],
+"Pralin":["Пралине","Praline"],"Rom":["Ром","Rum"],"Jujube":["Унаби","Jujube"],"Kakao":["Какао","Cacao"],"Qizil mevalar":["Красные фрукты","Red fruits"],
+"Muskat":["Мускат","Nutmeg"],"Muskat yong'og'i":["Мускатный орех","Nutmeg"],"Dafna":["Дафна","Daphne"],"Oq paçuli":["Белые пачули","White patchouli"],
+"Pushti qalampir":["Розовый перец","Pink pepper"],"Olma":["Яблоко","Apple"],"Eman moxi":["Дубовый мох","Oakmoss"],"Oakmoss":["Дубовый мох","Oakmoss"],"Kestambur":["Кашмеран","Cashmeran"],
+"Ananas":["Ананас","Pineapple"],"Qayin daraxti":["Берёза","Birch"],"Greypfrut":["Грейпфрут","Grapefruit"],"Ayva":["Айва","Quince"],"Suligul":["Ландыш","Lily of the valley"],
+"Suv zambagi":["Водяная лилия","Water lily"],"Patruli":["Пачули","Patchouli"],"Oq kehribar":["Белый янтарь","White amber"],"Pelargonium":["Пеларгония","Pelargonium"],
+"Lavanda":["Лаванда","Lavender"],"Rosemary":["Розмарин","Rosemary"],"Rozmarin":["Розмарин","Rosemary"],"Geranium":["Герань","Geranium"],"Galbanum":["Гальбанум","Galbanum"],
+"Clary Sage":["Мускатный шалфей","Clary sage"],"Sadr":["Кедр","Cedar"],"Sedir":["Кедр","Cedar"],"Sidr":["Кедр","Cedar"],"Cedr":["Кедр","Cedar"],"Sadr yog'ochi":["Кедр","Cedarwood"],
+"Archa ignasi":["Хвоя можжевельника","Juniper needles"],"Archayog'och":["Можжевельник","Juniperwood"],"Tuberoza":["Тубероза","Tuberose"],"Rhubarb":["Ревень","Rhubarb"],
+"Freziya":["Фрезия","Freesia"],"Lola":["Тюльпан","Tulip"],"Siklamen":["Цикламен","Cyclamen"],"Yog'ochli notalar":["Древесные ноты","Woody notes"],"Ambrette":["Амбретта","Ambrette"],
+"Safron":["Шафран","Saffron"],"Saffron":["Шафран","Saffron"],"Apelsin gul":["Флёрдоранж","Orange blossom"],"Mojave guli":["Цветок мохаве","Mojave flower"],"Binafsha":["Фиалка","Violet"],
+"Amberwood":["Амбровуд","Amberwood"],"Paxta guli":["Хлопковый цветок","Cotton flower"],"Bodom suti":["Миндальное молоко","Almond milk"],"Iris":["Ирис","Iris"],
+"Iris ildizi":["Корень ириса","Orris root"],"Paxta":["Хлопок","Cotton"],"Elemi":["Элеми","Elemi"],"Tilia guli":["Цветок липы","Linden flower"],
+"Qora smorodina bargi":["Лист чёрной смородины","Blackcurrant leaf"],"Lily":["Лилия","Lily"],"Ambara":["Амбра","Ambergris"],"Dengiz esintisi":["Морской бриз","Sea breeze"],
+"Kardamon":["Кардамон","Cardamom"],"Adaçayı":["Шалфей","Sage"],"Kastan":["Каштан","Chestnut"],"Oud yog'ochi":["Дерево уда","Oud wood"]
+};
+const F=[
+{b:"Orto Parisi",n:"Terroni",t:"box",l:"#b25a14",c:"#15130f",lab:["ORTO PARISI","TERRONI"],
+ N:[["Bergamot","Limon","Qora qalampir"],["Vetiver","Tutun","Zira"],["Teri","Paçuli","Tamaki"]],P:[200,400,600]},
+{b:"Orto Parisi",n:"Megamare",t:"box",l:"#2f7f96",c:"#15130f",lab:["ORTO PARISI","MEGAMARE"],
+ N:[["Dengiz tuzi","Limon","Bergamot"],["Yasemin","Gardeniya","Geokran"],["Ambergris","Oq mox","Patchuli"]],P:[250,500,750]},
+{b:"Montale",n:"Intense Cafe",t:"flask",m:"#c7cbd1",lab:["MONTALE","INTENSE CAFE"],lb:"#ececec",
+ N:[["Qahva","Bergamot","Qora smorodina"],["Yasemin","Rose","Vanil"],["Patchuli","Ambroksan","Madagaskar vanili"]],P:[100,200,300]},
+{b:"Montale",n:"Arabians Tonka",t:"flask",m:"#d6a53c",lab:["MONTALE","ARABIANS TONKA"],lb:"#f1e6c6",
+ N:[["Apelsin","Zira","Dolchin"],["Tonka loviya","Yasemin","Rosacea atirgulli"],["Sandal daraxti","Musk","Paçuli"]],P:[100,200,300]},
+{b:"Montale",n:"Aoud Forest",t:"flask",m:"#1f4a2e",lab:["MONTALE","AOUD FOREST"],lb:"#d8c690",
+ N:[["Yashil barglar","Mandarin","Bergamot"],["Oud","Vetiver","Qora qalampir"],["Ağar daraxti","Amber","Mashk"]],P:[110,220,330]},
+{b:"Kilian",n:"Angels' Share",t:"disc",l:"#d98a2b",c:"#d6aa4a",lab:["KILIAN","ANGELS' SHARE"],lb:"#d6aa4a",lf:"#1b1206",
+ N:[["Kon'yak","Ziravorlar","Doljin"],["Tonka loviya","Eman","Vanil"],["Karamel","Sandal daraxti","Pralin"]],P:[122,240,360]},
+{b:"Kilian",n:"Black Phantom",t:"box",o:"#0b0b0c",c:"#0d0d0d",lab:["KILIAN","BLACK PHANTOM"],lb:"#101010",lf:"#f2f2f2",
+ N:[["Rom","Qora qahva","Bergamot"],["Yasemin","Jujube","Kakao"],["Karamel","Patchuli","Vetiver"]],P:[110,220,330]},
+{b:"Kilian",n:"Intoxicated",t:"box",l:"#4a1a40",c:"#d1a85a",lab:["KILIAN","INTOXICATED"],lb:"#d1a85a",lf:"#1b1206",
+ N:[["Qizil mevalar","Mandarin","Muskat"],["Rose","Jasmine","Dafna"],["Vanil","Amber","Oq paçuli"]],P:[122,240,360]},
+{b:"Creed",n:"Aventus Absolu",t:"creed",m:"#c9ccd1",lab:["CREED","AVENTUS ABSOLU"],lb:"#dcdde0",
+ N:[["Pushti qalampir","Bergamot","Qora smorodina","Olma"],["Yasemin","Atirgul","Paçuli"],["Vetiver","Musk","Amber","Eman moxi","Kestambur"]],P:[120,240,360]},
+{b:"Creed",n:"Aventus / Aventus Black",t:"creed",m:"#b9bdc4",lab:["CREED","AVENTUS"],lb:"#d0d2d6",
+ N:[["Ananas","Qora smorodina","Bergamot","Olma"],["Yasemin","Qayin daraxti","Atirgul"],["Musk","Eman moxi","Ambergris","Vanil"]],P:[110,220,330]},
+{b:"Chanel",n:"Chance",t:"disc",l:"#f2b7c5",c:"#d9dbe2",lab:["CHANEL","CHANCE"],lb:"#fbf3f4",
+ N:[["Greypfrut","Ayva","Pushti qalampir"],["Yasemin","Suligul","Suv zambagi"],["Musk","Patruli","Oq kehribar"]],P:[70,140,210]},
+{b:"Chanel",n:"Coco Noir",t:"box",o:"#0a0a0a",c:"#0b0b0b",lab:["CHANEL","COCO NOIR"],lb:"#0b0b0b",lf:"#d8b45a",lbd:"#d8b45a",
+ N:[["Greypfrut","Bergamot","Apelsin"],["Jasmin","Atirgul","Pelargonium"],["Patchouli","Vetiver","Sandal daraxti","Muskus"]],P:[50,100,150]},
+{b:"Chanel",n:"Egoiste Platinum",t:"box",l:"#d6dae2",c:"#c0c4cc",lab:["CHANEL","EGOISTE PLATINUM"],
+ N:[["Lavanda","Rosemary","Mandarin"],["Geranium","Galbanum","Clary Sage"],["Oakmoss","Sadr","Amber","Vetiver"]],P:[60,122,180]},
+{b:"Byredo",n:"Gypsy Water",t:"cyl",l:"#e7d49f",c:"#0b0b0b",lab:["BYREDO","GYPSY WATER"],lb:"#efe6cf",
+ N:[["Bergamot","Limon","Archa ignasi"],["Archayog'och","Zira","Tuberoza"],["Amber","Sandal daraxti","Vetiver"]],P:[60,122,180]},
+{b:"Byredo",n:"La Tulipe",t:"cyl",l:"#f1b5bd",c:"#0b0b0b",lab:["BYREDO","LA TULIPE"],lb:"#f6dfe0",
+ N:[["Rhubarb","Bergamot","Freziya"],["Lola","Siklamen","Atirgul"],["Paçuli","Mushk","Yog'ochli notalar"]],P:[60,120,180]},
+{b:"Byredo",n:"Mojave Ghost",t:"cyl",l:"#dfe8e1",c:"#0b0b0b",lab:["BYREDO","MOJAVE GHOST"],lb:"#eef2ee",
+ N:[["Ambrette","Safron","Apelsin gul"],["Mojave guli","Binafsha","Sedir"],["Sandal daraxti","Mushk","Oq mox"]],P:[100,200,300]},
+{b:"",n:"Baccarat 540 Rouge",t:"box",l:"#c8504e",c:"#d1a85a",lab:["","BACCARAT ROUGE"],
+ N:[["Safron","Yasmin","Bergamot"],["Amberwood","Sadr yog'ochi","Jasmin"],["Ambergris","Sidr","Muskus"]],P:[120,240,330]},
+{b:"",n:"Beliy Dim",t:"box",o:"#f3f1ec",c:"#d1a85a",lab:["","BELIY DIM"],lf:"#6b5a3a",
+ N:[["Paxta guli","Limon","Bodom suti"],["Yasemin","Iris","Iris ildizi"],["Oq musk","Paxta","Vanil"]],P:[110,220,330]},
+{b:"",n:"Bois Imperial Essential",t:"box",l:"#2a1a10",c:"#d1a85a",lab:["","BOIS IMPERIAL"],lb:"#101010",lf:"#e8e2d6",
+ N:[["Bergamot","Qora qalampir","Elemi"],["Iris ildizi","Vetiver","Yasmin"],["Qayin daraxti","Amber","Muskus"]],P:[120,240,330]},
+{b:"Marc-Antoine Barrois",n:"Tilia",t:"box",l:"#f1f1ec",c:"#d1a85a",lab:["MARC-ANTOINE BARROIS","TILIA"],
+ N:[["Bergamot","Limon","Qora smorodina bargi"],["Tilia guli","Yasemin"],["Mushk","Sadr yog'ochi"]],P:[60,120,160]},
+{b:"Afnan",n:"Musk Abiyad",t:"box",o:"#f6f4ef",c:"#d1a85a",lab:["AFNAN","MUSK ABIYAD"],lf:"#6b5a3a",
+ N:[["Bergamot","Saffron","Muskat yong'og'i"],["Atirgul","Yasemin","Lily"],["Oq musk","Ambara","Patchouli"]],P:[70,130,180]},
+{b:"Ajmal",n:"Amber Wood",t:"box",l:"#6a3410",c:"#d1a85a",lab:["AJMAL","AMBER WOOD"],lb:"#d1a85a",lf:"#1b1206",
+ N:[["Apelsin","Ziravorlar","Lavanda"],["Amber","Amberwood","Jasmine"],["Paçuli","Vanil","Sandal yog'ochi"]],P:[60,120,160]},
+{b:"Armani",n:"Acqua di Giò",t:"box",l:"#86b8d8",c:"#aeb3ba",lab:["ARMANI","ACQUA DI GIO"],
+ N:[["Bergamot","Limon","Dengiz esintisi"],["Yasemin","Rozmarin","Paçuli"],["Oq paçuli","Oq kehribar","Cedr"]],P:[50,100,140]},
+{b:"Armani",n:"Stronger With You",t:"box",l:"#e3a58f",c:"#111111",lab:["ARMANI","STRONGER WITH YOU"],
+ N:[["Pushti qalampir","Kardamon","Lavanda"],["Dolchin","Adaçayı","Vanil"],["Kastan","Amber","Paçuli"]],P:[50,100,140]},
+{b:"Boadicea",n:"The Victorious Hanuman",t:"crest",lab:["BOADICEA","THE VICTORIOUS HANUMAN"],
+ N:[["Muskat yong'og'i","Safron","Qora qalampir"],["Atirgul","Yasemin","Oud yog'ochi"],["Teri","Amber","Vetiver"]],P:[50,100,140]}
+];
+
+Object.assign(L.uz,{drag:"suring yoki bosing",spray:"Sepib ko'rish",origL:"Kelib chiqishi",styleL:"Sepilish uslubi",homeL:"Brend vatani"});
+Object.assign(L.ru,{drag:"вращайте или нажмите",spray:"Распылить",origL:"Происхождение",styleL:"Стиль распыления",homeL:"Родина бренда"});
+Object.assign(L.en,{drag:"drag or tap",spray:"Try a spray",origL:"Origin",styleL:"Spray style",homeL:"Brand home"});
+F.forEach((f,i)=>{f.si=i;f.o=f.b});
+F[16].o="MFK";F[17].o="Beliy";F[18].o="Essential";
+const DESC={
+uz:["Tutun, vetiver va teri: quruq tuproq va iliq yog'och hidi. Jiddiy va o'ziga ishongan, kechki chiqishlar uchun.",
+"Dengiz tuzi va oq mox: sovuq to'lqin va quyoshda qizigan qoya. Yozning eng sho'r va yangi kayfiyati.",
+"Qahva, vanil va paçuli: yangi damlangan espresso va shirin vanil iliqligi. Tong va salqin kunlar uchun.",
+"Apelsin, dolchin va tonka loviya, sandal va mushk bilan to'lishgan iliq, shirin sharqona hid.",
+"Yashil barglar, oud va amber: nam o'rmon va qadimiy yog'och. Chuqur, tabiiy va kuchli.",
+"Kon'yak, doljin va karamel: bochkada pishgan ichimlikning shirin va iliq xushbo'yligi. Qishki oqshomlar uchun.",
+"Rom, qora qahva va kakao: qorong'i, shirin va sirli. Kechasi o'zini ko'rsatadigan hid.",
+"Qizil mevalar, atirgul va vanil: shirin-ziravorli, kayfni oshiradigan iliqlik.",
+"Pushti qalampir, olma va eman moxi: kuchli, mag'rur, muvaffaqiyat hidi.",
+"Ananas, qora smorodina va qayin: yangi, mevali va ishonchli. Har kuni kiyiladigan kuch.",
+"Greypfrut, ayva va oq kehribar: yengil, gulli va quvnoq. Kun bo'yi kayfiyat beradi.",
+"Greypfrut, atirgul va paçuli: nafis, chuqur va kechki. Qora libos kabi klassik.",
+"Lavanda, rozmarin va eman moxi: toza, salqin va erkakcha. Ozoda klassika.",
+"Archa ignasi, limon va sandal: o'rmon yo'lidagi sayyor, yengil va erkin.",
+"Rhubarb, lola va siklamen: bahor bog'i, yangi va nozik gulli.",
+"Safron, binafsha va sedir: sahroda ochilgan g'alati gul, sirli va yumshoq.",
+"Safron, amberwood va jasmin: shirin-yog'ochli, iliq va yorqin. Atrofdagilar sezadigan iz qoldiradi.",
+"Paxta, iris va oq musk: toza kiyim va oq tutun kabi sokin, yumshoq.",
+"Qora qalampir, vetiver va qayin: sovuq-ziravorli, sof yog'och hidi.",
+"Tilia guli, bergamot va mushk: yoz kechasi daraxt ostidagi nozik yangilik.",
+"Atirgul, yasemin va oq musk: toza, yumshoq va teriga yaqin hid.",
+"Apelsin, amber va vanil: iliq yog'och va shirin smola. Qulay va oson.",
+"Bergamot, dengiz esintisi va oq paçuli: okean bo'yidagi yengil erkinlik.",
+"Kardamon, dolchin va kastan: issiq, shirin va tanish, qishki quchoq kabi.",
+"Muskat, oud va teri: kuchli sharqona hid, jangchi malika ruhi."],
+ru:["Табак, ветивер и кожа: запах сухой земли и тёплого дерева. Серьёзный и уверенный, для вечерних выходов.",
+"Морская соль и белый мох: прохладная волна и нагретые солнцем скалы. Самое солёное и свежее настроение лета.",
+"Кофе, ваниль и пачули: свежий эспрессо и сладкое ванильное тепло. Для утра и прохладных дней.",
+"Апельсин, корица и бобы тонка с сандалом и мускусом: тёплый, сладкий восточный аромат.",
+"Зелёные листья, уд и амбра: влажный лес и древнее дерево. Глубокий, природный, сильный.",
+"Коньяк, корица и карамель: сладкий тёплый аромат выдержанного в бочке напитка. Для зимних вечеров.",
+"Ром, чёрный кофе и какао: тёмный, сладкий и загадочный. Аромат, который раскрывается ночью.",
+"Красные ягоды, роза и ваниль: сладко-пряное тепло, от которого кружится голова.",
+"Розовый перец, яблоко и дубовый мох: сильный, гордый аромат успеха.",
+"Ананас, чёрная смородина и берёза: свежий, фруктовый и надёжный. Сила на каждый день.",
+"Грейпфрут, айва и белый янтарь: лёгкий, цветочный и весёлый. Поднимает настроение на весь день.",
+"Грейпфрут, роза и пачули: изящный, глубокий и вечерний. Классика, как чёрное платье.",
+"Лаванда, розмарин и дубовый мох: чистый, прохладный и мужской. Аккуратная классика.",
+"Хвоя можжевельника, лимон и сандал: странник на лесной тропе, лёгкий и свободный.",
+"Ревень, тюльпан и цикламен: весенний сад, свежий и нежно-цветочный.",
+"Шафран, фиалка и кедр: странный цветок, распустившийся в пустыне, загадочный и мягкий.",
+"Шафран, амбровуд и жасмин: сладко-древесный, тёплый и яркий. Оставляет заметный шлейф.",
+"Хлопок, ирис и белый мускус: тихий и мягкий, как чистое бельё и белый дым.",
+"Чёрный перец, ветивер и берёза: прохладно-пряная, чистая древесина.",
+"Цветок липы, бергамот и мускус: нежная свежесть под деревом летней ночью.",
+"Роза, жасмин и белый мускус: чистый, мягкий аромат близко к коже.",
+"Апельсин, амбра и ваниль: тёплое дерево и сладкая смола. Уютный и лёгкий.",
+"Бергамот, морской бриз и белые пачули: лёгкая свобода у океана.",
+"Кардамон, корица и каштан: тёплый, сладкий и знакомый, как зимние объятия.",
+"Мускатный орех, уд и кожа: мощный восточный аромат с духом королевы-воительницы."],
+en:["Tobacco, vetiver and leather: dry earth and warm wood. Serious and self-assured, made for evenings out.",
+"Sea salt and pale moss: a cold wave over sun-warmed rock. The saltiest, freshest mood of summer.",
+"Coffee, vanilla and patchouli: fresh espresso with sweet vanilla warmth. For mornings and cool days.",
+"Orange, cinnamon and tonka bean wrapped in sandalwood and musk: a warm, sweet oriental.",
+"Green leaves, oud and amber: damp forest and ancient wood. Deep, natural and strong.",
+"Cognac, cinnamon and caramel: the sweet warmth of a spirit aged in oak. For winter evenings.",
+"Rum, black coffee and cacao: dark, sweet and mysterious. A scent that comes alive at night.",
+"Red fruits, rose and vanilla: a sweet, spicy warmth that goes to your head.",
+"Pink pepper, apple and oakmoss: strong, proud, the scent of success.",
+"Pineapple, blackcurrant and birch: fresh, fruity and dependable. Everyday strength.",
+"Grapefruit, quince and white amber: light, floral and cheerful. Lifts the whole day.",
+"Grapefruit, rose and patchouli: elegant, deep and made for the evening. A classic like a black dress.",
+"Lavender, rosemary and oakmoss: clean, cool and masculine. A tidy classic.",
+"Juniper needles, lemon and sandalwood: a wanderer on a forest trail, light and free.",
+"Rhubarb, tulip and cyclamen: a spring garden, fresh and delicately floral.",
+"Saffron, violet and cedar: a strange flower blooming in the desert, mysterious and soft.",
+"Saffron, amberwood and jasmine: sweet and woody, warm and bright. Leaves a trail people notice.",
+"Cotton, iris and white musk: quiet and soft like clean laundry and white smoke.",
+"Black pepper, vetiver and birch: cool, spicy, pure wood.",
+"Linden blossom, bergamot and musk: delicate freshness under a tree on a summer night.",
+"Rose, jasmine and white musk: a clean, soft scent that stays close to the skin.",
+"Orange, amber and vanilla: warm wood and sweet resin. Easy and comfortable.",
+"Bergamot, sea breeze and white patchouli: light freedom by the ocean.",
+"Cardamom, cinnamon and chestnut: warm, sweet and familiar, like a winter hug.",
+"Nutmeg, oud and leather: a powerful oriental with the spirit of a warrior queen."]
+};
+const ORG={
+"Orto Parisi":["Italiyalik nish parfyum uyi. Tabiat, tuproq va dengiz mavzulari hamda noodatiy tarkiblari bilan tanilgan.","Итальянский нишевый парфюмерный дом. Известен темами природы, земли и моря и необычными композициями.","An Italian niche perfume house, known for themes of nature, earth and sea and for unusual compositions."],
+"Montale":["2003-yilda Parijda tashkil topgan uy. Oud va atirgulga asoslangan kuchli, sharqona hidlarga ixtisoslashgan.","Дом основан в Париже в 2003 году. Специализируется на насыщенных восточных ароматах на основе уда и розы.","A house founded in Paris in 2003, specialising in strong oriental scents built on oud and rose."],
+"Kilian":["2007-yilda Parijda ochilgan. Asoschisi Kilian Hennessy mashhur Hennessy konyak oilasi vorisi.","Основан в Париже в 2007 году. Создатель Килиан Хеннесси из семьи знаменитого коньячного дома Hennessy.","Founded in Paris in 2007 by Kilian Hennessy, a descendant of the famous Hennessy cognac family."],
+"Creed":["1760-yilda Londonda tashkil topgan, keyinroq Parijga ko'chgan tarixiy parfyum uyi.","Исторический парфюмерный дом, основанный в Лондоне в 1760 году и позднее переехавший в Париж.","A historic perfume house founded in London in 1760 that later moved to Paris."],
+"Chanel":["Parij. Gabrielle «Coco» Chanel asos solgan, dunyo moda va parfyum ramzlaridan biri.","Париж. Основан Габриэль «Коко» Шанель, один из символов мировой моды и парфюмерии.","Paris. Founded by Gabrielle “Coco” Chanel, one of the great names of fashion and perfume."],
+"Byredo":["2006-yilda Stokgolmda (Shvetsiya) Ben Gorham asos solgan. Xotira va his-tuyg'ularga asoslangan hidlari bilan mashhur.","Основан в 2006 году в Стокгольме Беном Горэмом. Известен ароматами, построенными на воспоминаниях и эмоциях.","Founded in Stockholm in 2006 by Ben Gorham, known for scents built around memory and emotion."],
+"MFK":["Maison Francis Kurkdjian, Parij (2009). Baccarat Rouge 540 mashhur kristall ustasi Baccarat bilan hamkorlikda yaratilgan.","Maison Francis Kurkdjian, Париж (2009). Baccarat Rouge 540 создан совместно с хрустальным домом Baccarat.","Maison Francis Kurkdjian, Paris (2009). Baccarat Rouge 540 was made in collaboration with the crystal maker Baccarat."],
+"Beliy":["Nomi ruscha «oq tutun» degani. Toza kiyim va mushk hidiga yaqin, yumshoq zamonaviy uslub.","Название по-русски значит «белый дым». Мягкий современный стиль, близкий к запаху чистого белья и мускуса.","The name is Russian for “white smoke”. A soft, modern style close to clean laundry and musk."],
+"Essential":["Essential Parfums: zamonaviy fransuz nish brendi. Bois Imperial uning eng sevimli hidlaridan biri.","Essential Parfums: современный французский нишевый бренд. Bois Imperial — один из самых любимых его ароматов.","Essential Parfums is a modern French niche brand; Bois Imperial is one of its best-loved scents."],
+"Marc-Antoine Barrois":["Parijlik zamonaviy nish parfyum uyi.","Современный нишевый парфюмерный дом из Парижа.","A modern niche perfume house from Paris."],
+"Afnan":["Yaqin Sharq (BAA) parfyum brendi: arab xushbo'yliklari va zamonaviy uslubni birlashtiradi.","Парфюмерный бренд Ближнего Востока (ОАЭ): сочетает арабские ароматы и современный стиль.","A Middle Eastern (UAE) perfume brand that blends Arabian fragrance traditions with a modern style."],
+"Ajmal":["1951-yilda Hindistonda Haji Ajmal Ali boshlagan arab attorlik uyi, hozir Dubayda joylashgan.","Арабский парфюмерный дом, основанный в 1951 году в Индии Хаджи Аджмалом Али, сейчас базируется в Дубае.","An Arabian perfumery started in India in 1951 by Haji Ajmal Ali, now based in Dubai."],
+"Armani":["Milan (Italiya). Giorgio Armani moda uyi: toza, zamonaviy va nafis hidlari bilan mashhur.","Милан (Италия). Модный дом Giorgio Armani, известный чистыми, современными и изящными ароматами.","Milan, Italy. The Giorgio Armani fashion house, known for clean, modern and elegant scents."],
+"Boadicea":["Londonlik nish brend. Nomi qadimgi Britaniyaning jangchi malikasi Boadiceadan olingan.","Нишевый бренд из Лондона. Назван в честь древнебританской королевы-воительницы Боадикеи.","A London niche brand named after Boadicea, the warrior queen of ancient Britain."]
+};
+const CNAME={FR:["Fransiya","Франция","France"],IT:["Italiya","Италия","Italy"],US:["AQSH","США","USA"],UK:["Angliya","Великобритания","UK"],DE:["Germaniya","Германия","Germany"],AE:["BAA","ОАЭ","UAE"],SE:["Shvetsiya","Швеция","Sweden"],JP:["Yaponiya","Япония","Japan"],OM:["Ummon","Оман","Oman"],CH:["Shveytsariya","Швейцария","Switzerland"],ES:["Ispaniya","Испания","Spain"],UF:["Angliya / Fransiya","Великобритания / Франция","UK / France"]};
+const CTRY=[["CHANEL","FR"],["DIOR","FR"],["TOM FORD","US"],["TOOM FORD","US"],["Y.S.L","FR"],["YSL","FR"],["VERSACE","IT"],["ARMANI","IT"],["DOLCE","IT"],["D&G","IT"],["GUCCI","IT"],["GIVENCH","FR"],["GVENCH","FR"],["GIVENCY","FR"],["LANCOME","FR"],["HERMES","FR"],["BOSS","DE"],["BURBERRY","UK"],["BVLGARI","IT"],["CARTIER","FR"],["KENZO","FR"],["LACOSTE","FR"],["RABANE","FR"],["RABBANE","FR"],["JO MALONE","UK"],["J.MALONE","UK"],["LE LABO","US"],["BYREDO","SE"],["KILIAN","FR"],["KILLIAN","FR"],["MONTALE","FR"],["MANCERA","FR"],["NASOMATTO","IT"],["XERJOFF","IT"],["AMOUAGE","OM"],["INITI","FR"],["MARLEY","FR"],["MARLY","FR"],["ORTO PARISI","IT"],["ORTA PARISI","IT"],["NIHIL","FR"],["MEMO ","FR"],["ROJA","UK"],["TIZIANA","IT"],["TERENZ","IT"],["SOSPIRO","IT"],["ESCADA","DE"],["FENDI","IT"],["MOSCHINO","IT"],["NINA RICCI","FR"],["TRUSSARDI","IT"],["CAROLINA HERRERA","US"],["CALVIN KLEIN","US"],["VICTORIA","US"],["V.S","US"],["V.SECRET","US"],["V.SCRET","US"],["DAVIDOFF","CH"],["DAVIDOV","CH"],["LATTAFA","AE"],["AFNAN","AE"],["AJMAL","AE"],["SHISEIDO","JP"],["SISLEY","FR"],["ZADIG","FR"],["NARCISO","US"],["CLINIQUE","US"],["DONNA KARAN","US"],["CHLOE","FR"],["CACHAREL","FR"],["LANVIN","FR"],["GUERLAIN","FR"],["FERRAGAMO","IT"],["MONTBLANC","DE"],["KAYALI","US"],["JULIETTE","FR"],["ORMONDE","UK"],["ZIELENSKI","UK"],["BOND ","US"],["BANDERAS","ES"],["PRADA","IT"],["DUNHILL","UK"],["AZZARO","FR"],["BRIONI","IT"],["BRITNEY","US"],["AVON","US"],["BALDESSARINI","DE"],["RALPH LAUREN","US"],["JEAN PAUL","FR"],["GEORGIO","IT"],["GIORGIO","IT"],["HUGO","DE"],["LA MALE","FR"],["CREED","UF"]];
+const FULL=`A.BARRIOS TILIA UNI
+ABIYAD AFNAN MUKHLAT
+ABIYAD MUSK AFNAN T
+Acqua di Parma Colonia Top
+AFNAN TRIBUT
+AJMAL AMBER WOOD Delux
+AJMAL AMBERR WOOD T
+AJMAL ARISTOCRAT.
+AKSA MAKAMI IBRAHIM T
+AL AKSA
+AL AKSAA
+AL RAHAB C.MADINA T
+ALEXANDRE MORNING MUSK
+ALFRED DUNHILL DESIRE BLUE
+ALFRED DUNHILL DESIRE WOMEN
+ALFRED DUNHILL DUNHILL
+AMOUAGE BLOSSOM LOVE
+AMOUAGE GUIDANCE
+AMOUAGE GUIDANCE DELUX
+AMOUAGE HONOUR WOMEN
+AMOUAGE REFLECTION MAN
+AMOUAGE SUNSHINE W
+ANTONI BANDERAS BLUE MEN
+ANTONI BANDERAS GOLDEN SECRET
+ANTONIO BANDERAS BLUE WOMEN
+ARMAND BASI IN RED
+ARMANI ACQUA DI GIO man T
+ARMANI MY WAY INTENSE
+ARMANI MY WAY T
+ARMANI STRONGER WITH YOU
+ARMANI STRONGER WITH YOU INTENSE
+ATTAR C.MUSK KASHMIR T
+4222223S
+ATTAR.C AL RAYHAN
+ATTAR.C KHALTAT NİGHT
+ATTAR.C THE QUEEN OF SHEBA
+AVON TODAY
+AZZARO CHROME
+AZZARO MADEMOISELLE
+BACCARAT 540 EXTRAIT DELUX
+BACCARAT 540 ROUGE DELUX
+B.AGVA POUR HOMME ATLANTIQVE
+BALDESSARINI AMBRE T
+BELIY DIM
+BOADICE THE VICTORY HANUMAN TOP
+BOADICEA KNIGHT OF LOVE
+BOIS IMPERIAL ESSENTIAL D
+B.OMNIA CRYSTALLINE T
+BOND LAFAYETTE STREET
+BOND WEST SIDE
+BORN FOR ETERNITY
+Brioni Parfum Brioni T
+BRITNEY SPEARS CIRCUS FANTASY
+BURBERRY BODY
+BURBERRY SPORT FOR MEN
+BVLGARI AQVA P.H MARINE
+BVLGARI AQVA POUR HOMME
+BVLGARI AU THE NOIR
+BVLGARI GYAN LE GEMME
+BVLGARI JASMIN NOIR
+BVLGARI OMNIA
+Bvlgari Omnia Coral
+BVLGARI POUR HOMME TOP
+BYREDO BAL D'AFRIQUE
+BYREDO BALD'AFRIQUE T
+BYREDO BIBLIOTHEQUE TOP
+BYREDO BLACK SAFFRON
+BYREDO BLANCH T
+BYREDO GYPSY WATER
+BYREDO LA TULIPE T
+BYREDO MARIJUANNA
+BYREDO MOJAVE GHOST
+BYREDO MOJAVE GOST T
+C. DIOR MISS DIOR
+C DIOR SAUVAGE S
+CACHAREL AMOR AMOR
+CALVIN KLEIN EUPHORIA BLOSSOM
+CALVIN KLEIN EUPHORIA MEN
+CALVIN KLEIN EUPHORIA WOMEN
+CAROLINA HERRERA BAD BOY
+CAROLINA HERRERA CHIC FOR MEN
+CAROLINA HERRERA GOOD GIRL T
+CAROLINA HERRERA GOOD GRIL
+CAROLINA HERRERA 212 MEN
+CAROLINA HERRERA 212 SEXY M
+CAROLINA HERRERA 212 SEXY W
+CAROLINA HERRERA 212 VIP ROSE
+CAROLINA HERRERA 212 VIP WOMEN
+CAROLINA HERRERA 212 WOMEN
+CARTIER DECLARATION T
+CARTIER EAU DE CARTIER UNISEX
+CARTIER LA PANTHERE
+C.D.FAHRENHEIT
+C.DIOR ADICT
+C.DIOR FAHRENHEIT
+C.DIOR FAHRENHEIT LE PARFUM
+C.DIOR HOME SPORT T
+C.DIOR HOMME INTENSE M
+C.DIOR JADORE
+C.DIOR JADORE T
+C.DIOR MISS CHERIE
+C.DIOR ROUGE TRAFALGER T
+C.DIOR SAVUAGE DELUX D
+C.DIOR TOBACOLOR
+C.H 212 ON ICE MEN
+CHANEL CHANCE 1
+CHANEL COCO CHANEL
+CHANEL COCO MADEMOISELLE
+CHANEL COCO MADEMOISELLE R
+CHANEL COCO NOIR
+CHANEL DE BLUE T
+CHANEL EAU FRAICHE
+CHANEL EGOIST
+CHANEL EGOIST PLATINUM
+CHANEL TENDRE T
+CHANEL 5
+CHLOE
+CHLOE CHLOE
+CHLOE LOVE CHLOE
+CHLOE NOMADE
+CHROME AZZARO SPORT M
+C.H.212 VIP BLACK M
+C.H.212 VIP FOR MEN T
+CLINIQUE HAPPY FOR MEN
+CLINIQUE HAPPY W
+CLIVE CHRISTIAN MATSUKITA DELUX
+CLUB TE NUIT INTENSE
+CLUB TE NUIT INTENSE DELUX
+COCO-COLA PARFUM T
+CREED AVENTUS ABSOLU
+CREED AVENTUS ABSOLU TOP
+CREED AVENTUS BLACK DELUX
+CREED AVENTUS BLACK S
+CREED AVENTUS BLACK T
+CREED AVENTUS FOR HER TOP
+CREED AVENTUS S
+CREED AVENTUS T
+CREED LOVE IN WHITE W
+CREED SILVER D
+CREED SILVER MOUNTAIN WATER T
+DALAL
+DAVIDOFF CHAMPION
+DAVIDOFF ECHO WOMAN
+DAVIDOV COOL WATER W
+D.COOL WATER MEN TOP
+DEVILS INTRIGUE
+D&G KING S
+D&G KING T
+D&G L'IMPERATRICE T
+D&G THE ONE WOMEN
+DIMA BILAN
+Dior Sauvage Elixir Delux
+DOLCE & GABBANA
+DOLCE & GABBANA LEMON
+DOLCE GABBANA DOLCE
+DONNA KARAN BE DELICIOUS
+ECLAT SPORT
+ESCADA CHERRY IN THE AIR
+ESCADA MIAMI BLOSSOM
+ESCADA OCEAN LOUNGE
+ESCADA SEXY GRAFFITI
+Escada Sunny Fruit Top
+ESCENTRIC MOLECULE 02 BLACK D
+ESCENTRIC MOLECULE 03 DELUX
+ESCENTRIC MOLECULE 03 S
+ESCENTRIC MOLECULU 02 S
+Esscentric Molecule 02 black S
+ESSENTRIC MOLECULE 05 DELUX
+ESSENTRIC MOLECULE NO 8
+ESSENTRIC MOLECULE VOLUME 1 D
+ESSENTRIC MOLECULE VOLUME 1 S
+ESSENTRIC MOLECULE 01 DELUX
+ESSENTRIC MOLECULE 01 IRIS T
+ESSENTRIC MOLECULE 01 MANDARINE T
+ESSENTRIC MOLECULE 01 PATCHOULI
+ESSENTRIC MOLECULE 01 S
+ESSENTRIC MOLECULE 01 T 1
+ESSENTRIC MOLECULE 02 T
+ESSENTRIC MOLECULE 04 DELUX
+ESSENTRIC MOLECULE 04 T
+ESSENTRIC MOLECULE 1 VOLUME T
+Ex nhilo Nrcotic black Delux
+EX NIHILLO LUST IN PARADISE
+EX NIHILO BLUE TALISMAN
+EX NIHILO FLEUR NARCOTIQUE DELUX
+EX NIHILO FLEUR NARCOTIQUE T
+Ex nihilo Nacotic Black S
+EX NIHILO PARADISE PINK T
+FENDI
+FENDI FANTASIA
+FENDI FOR MEN
+F.K.CENTLE FLUIDITY SILVER
+G.ALL.MANDARIN BASILIC T
+G.ANGEL DEMON LA SECRET TOP
+G.ANGEL DEMON LE SECRET
+G.BY GUCCI SPORT POUR HOMME
+GENYUM PAINTER
+Georgio Armani Code T
+Georgio My Way Floral T
+Giorgio Armani Code ice T
+GIORGIO ARMANI SI
+GIVENCHI PLAY MAN
+GIVENCHY BLUE LABEL
+GIVENCHY CENTLEMEN ONLY M
+GIVENCHY GENTLEMAN 2017
+GIVENCHY IRRESISTIBLE 2020
+GIVENCHY L'INTERDIT
+GIVENCHY PLAY FOR HER
+GIVENCY BLOOM
+GUCCI BAMBOO
+GUCCI BLOOM
+GUCCI BY GUCCI
+Gucci Flora Gorgeous Jasmine T
+GUCCI. G BLACK POUR HOMME TOP
+GUCCI GUILTY
+GUCCI RUSH 1
+GUCCI RUSH 2
+GUCCI RUSH-1
+GUERLAIN IDYLLE
+GUERLAIN TOBACCO HONEY
+GVENCHY ANGEL DEMON
+GVENCHY DAHLIA DIVIN
+Hajarul Aswad mushk T
+H.BOSS BALDERSARINI AMBRE
+H.BOSS BOTTLED TONIC M
+H.BOSS ORANGE M
+H.BOSS UNLIMITED
+HERMES H 24
+HERMES TERRE T
+HUGO BOSS ALIVE
+HUGO BOSS BOSS BOTTLED TONIC TOP
+HUGO BOSS BOTTLED SPORT
+HUGO BOSS BOTTLED SPORT T
+Hugo Boss Element Boss
+HUGO BOSS FEMME
+HUGO BOSS INTENSE
+HUGO BOSS MA VIE
+HUGO BOSS ORANGE
+HUGO BOSS THE SCENT
+HUGO BOSS WOMEN
+HUNCA CALDION
+INITI SIDE EFFECT T
+INITIO OUD FOR GREATNESS D
+INITIO PARFUMS PRIVAET OUT
+INITIO PRIVES REHAB UNI
+INITIO PSYCHEDELIC LOVE
+INITIO SIDE EFFECT UNI
+JEAN PAUL GAULTIER LA MALE ELIXIR
+JEAN PAUL GAULTIER SCANDAL
+JEAN PAUL GUILTIER LE BEAU PARADOX
+J.HAS A GUN VANILLA VIBES T
+J.MALONE BASIL&MANDARIN T
+J.MALONE MYRRH&TONKA T
+J.MALONE PEONY&BLUSH SUEDE
+J.MALONE WHISKEY CEDAR T
+JO MALONE BLACKBERRY BAY T
+JO MALONE LONDON WOOD SAGE
+JO MALONE NECTARINE BLOSSOM
+JO MALONE ORANGE BLOSSOM T
+JULIETTE HAS A GUN NOT A PERFUME T
+JULIETTE SUPERDOSE DELUX
+KAJAL ALMAZ T
+KAKAIN F.BOCLET
+KAKAINE
+KAYALI VANILLA 28 T
+KENZO AMOUR
+KENZO ELECTRIC TOP
+KENZO LEAU PAR KENDRA T
+KENZO L'EAU PAR KENZO WOMEN
+KENZO LEAU PAR MEN
+KENZO LEAU POUR FEMME
+KENZO POUR HOMME MEN
+KENZO WORLD EAU DE TOILETTE
+K.G.GIRL GONE BAD EXTREME
+K.GOOD GIRL GONE BAD D
+KILIAN ANGELS SHARE UNI DELUX
+KILIAN BACK TO BLACK (APHRODISAC)
+KILIAN BAD BOYS T
+KILIAN BLACK PHANTOM TOP
+KILIAN GOOD GIRL GONE BAD S
+KILIAN INTOXICATED T
+KILIAN VODKA ON THE ROCKS TOP
+KILLIAN DEVILS INTRIGUE
+Killian Forbidden Games T
+KISWAH SCENT KAABA T
+K.PRINCESS MY KIND OFLOVE T
+KROV SHAXIDA TOP
+K.VODKA ON THE ROCKS
+K.VUITTON SYMPHONY DELUX
+LA MALE ;E PARFUM MEN
+LA MALE ELIXIR
+LACOSTE CHALLANGE M
+LACOSTE ELEGANCE M
+LACOSTE ESSENTIAL
+LACOSTE ESSENTIAL T
+LACOSTE L'HOMME
+LACOSTE POUR FEMME 1
+LACOSTE RED M
+LACOSTE RED T
+LACOSTE ROUGE
+LACOSTE SENSUELLE T
+LACOSTE WHITE T
+LACOSTE YELLOW
+LACOSTE.P.E.SPARKLING
+LANCOME CLIMAT
+LANCOME HYPLOSE
+LANCOME IDOLE T
+LANCOME LA VIE EST BELLA
+LANCOME LA VIE ESTE BELLA T
+LANCOME MAGIE NOIRE
+LANCOME MIRACLE
+LANCOME TRESOR
+LANCOME TRESOR MIDNIGHT ROSE
+LANVIN ECLAT D'ARPEGE 1
+LANVIN MERRY ME
+LANVIN MODERN PRINCESS EAU SENSUELLE T
+LATTAFA YARA
+LE LABO ANOTHER 13 T
+LE LABO SANTAL 33 T
+LE LABO YLANG 49
+L.ECLAT D'ARPEGE T
+LOUIS VUITTON L\`IMMENSITE DELUX
+LOUIS VUITTON L\`IMMENSITE S
+LOUIS VUITTON L\`IMMENSITE T
+L.V AFTERNOON SWIM DELUX
+L.VUITTIN AFTERNOON SWIM T
+L.VUITTON NUIT DE FEU D
+L.VUITTON SPELL ON YOU T
+M.A BARRIOS ALDEBARAN DELUX
+MADAWI GOLD
+MANCERA CEDRAT BOISE T
+MANCERA RED TABACCO T
+MANCERA ROSES VANILLE.
+MANCERA WILD CANDY TOP
+Megamare Black Del
+Megamare black T
+MEMO AFRICAN LEATHER
+MEMO FRENCH LEATHER S
+MEMO IRIS LEATHER
+MEMO KEDU T
+MEMO MARFA
+MEMO MARFA T
+MEMO OCEAN LEATHER
+MEMO PARIS MEMO
+MOLECULE ZARCO 09 T
+MONO BUBBLE GUM
+MONO CHERRY
+MONO KAKOS
+MONO LAVENDER
+MONO MELON
+MONO MOLECULE 01
+MONO OCEAN BREEZE
+MONO ORANGE BLOSSOM
+MONO PEACH
+MONO POUDRE
+MONO ROSE FLOWER
+MONO STRAWBERRY
+MONO VANILLA JASMIN
+MONO WATERMELON
+MONTALE AOUD FOREST Top
+MONTALE ARABIANS T
+MONTALE BLACK AOUD S
+MONTALE FRUITS OF THE MUSK
+MONTALE INTENSE CAFE
+MONTALE INTES CAFE T
+MONTALE PRETTY FRUITY
+MONTALE PURE GOLD
+MONTALE ROSES MUSK T
+MONTALE ROSES MUSK DELUX
+MONTALE ROSES MUSK S
+MONTALE SOLEIL DE CAPRI T
+MONTALE STARRY NIGHT II
+MONTALE STARRY NIGHT T
+MONTALE VANILLA EXTASY
+MONTALE VANILLE ABSOLU T
+Montblanc Emblem T
+Montblanc Explore T
+MONTBLANC LEGEND
+MOSCHINO FUNNY
+MOSCHINO LOVE
+MY BURBERRY R
+MY BURBERRY MEN
+NARCISO RODRIGUEZ FOR HER
+NARCOS'IS VERTUS T
+NASOMATTO BALCK AFGANO DELUX
+NASOMATTO BARAONDA EXTRAIT DELUX
+NASOMATTO BLACK AFGANO S
+NASOMATTO BLACK AFGANO T
+NASOMATTO BLACK AFGANO T RENGSIZ-R 600
+NEBESNIY FERAMON T
+NEJMA 7 I
+NINA RICCI LOVE IN PARIS
+NINA RICCI RICCI RICCI R
+NINA RICCI 2006
+N.RODRIGUEZ POUDREE
+O.JEANNE MON TABAK
+ORMONDE JAYNE 4.MONTABACO INTENSIVO D
+ORTA PARISI TERONI DELUX
+ORTO PARISI MEGAMARE DEL
+ORTO PARISI MEGAMARE DELUX
+ORTO PARISI MEGAMARE S
+ORTO PARISI TERRONI
+PACO RABANE LADY MILLION
+PACO RABANE PHANTOM
+PACO RABANNE BLACK XS MEN
+PACO RABANNE INVICTUS AGUA
+PACO RABANNE INVICTUS T
+PACO RABANNE ONE MILLION T
+PACO RABANNE ULTRAVIOLET
+PACO RABBANE FAME
+PACO RABBANE ONE MILLION TOP
+PARFUM DE MARLEY LAYTON TOP
+PARFUM DE MARLEY VALAYA DELUX
+PARFUM DE MARLEY VALAYA TOP
+PARFUM DE MARLY SAFAND
+PARFUMS DE MARLEY DELINA
+PARFUMS DE MARLEY DELINA D
+P.RABANNE INVICTUS T
+P.RABANNE INVICTUS VICTORY T
+P.RABBANE BLACK XS MEN
+PRADA CANDYYY
+P.R.INVICTUS AQUA TOP
+RALPH LAUREN HOLIDAY BEAR EDITION
+RASASI ZEBRA
+ROJA ELYSIUM POUR HOMME D
+ROJA ELYSIUM T
+ROJA OLIGARCH T
+ROJA OLIGARCH TOP
+ROSENDO MATEU FLORAL A.S.M S
+SALVATORE FERRAGAMO AMO.
+S.FERRAGAMO ATTIMO
+SHAHREZAD
+SHAIK AL SHYUX
+SHAIK CLASSIC 77 T
+SHAIK 70 DELUX
+SHISEIDO ZEN
+SISLEY SOIR DE LUNE
+SOBLAZN T
+SOSPIRO ACCENTO DELUX
+SOSPIRO ERBA PURA Delux
+SOSPIRO ERBA PURA T
+SOSPIRO ERBA PURE BROWN DELUXQ
+SOSPIRO ERBA PURE BROWN S
+T. TERENZE ANDROMEDA TOP
+TIZIANA TERENZE ANDROMEDA T
+TIZIANA TERENZE GUMIN DELUX
+TIZIANA TERENZI ATLANTIDE D
+TIZIANA TERENZI ATLANTIDE T
+TIZIANA TERENZI GASSIOPEA T
+TIZIANA TERENZI GUMIN S
+TIZIANA TERENZI GUMIN T
+TIZIANA TERENZI KIRKE S
+TOM FORD BITTER PEACH T
+TOM FORD COSTA AZZURA
+TOM FORD BLACK ORCHIDE
+TOM FORD CHERRY SMOKE T
+TOM FORD COSTA AZZURRA T
+TOM FORD FORD ROSE PRICK
+TOM FORD FUCKING FABUL
+TOM FORD FUCKING FABULOUS T
+TOM FORD ITALIAN CUPRESS UNI
+TOM FORD LOST CHERRY D
+TOM FORD LOST CHERRY T
+TOM FORD MANDARIN T
+TOM FORD METALLIQUE W
+TOM FORD OUD WOOD T
+TOM FORD SOLEIL BLANC T
+TOM FORD SOLEIL BLANC UNI
+Tom Ford Tobacco Vanille D
+Tom Ford Tobacco Vanille T
+TOM FORD TUSCAN LEATHER
+TOM FORD TUSCAN LEATHER T
+TOM FORD VANILLA SEX
+TOM FORD WHITE PATCHOULI
+TOOM FORD TOBACCO FATALI
+TRUSSARDI DELICATE ROSE W
+TRUSSARDI DONNA 2011
+TRUSSARDI DONNA 2011 T
+TRUSSARDI MY LAND
+TRUSSARDI MY NAME
+TRUSSARDI UOMO
+T.TERENZE KIRKE DELUX
+T.TERENZI GASANOVA S
+VERSACE BRIGHT CRYSTAL ABSOLU TOP
+VERSACE BRIGHT CRYSTAL 2
+VERSACE CRYSTAL NOIR
+VERSACE CRYSTAN NOIR T
+VERSACE EROS POUR FEMME
+VERSACE EROS T
+VERSACE MEN FRAICHE T
+VERSACE POUR HOMME
+VERSACE POUR HOMME T
+VERSACE VANITAS
+VERSACE VERSENSE
+VERSACE VERSUS
+VICTORIA SECRET CRUSH W
+VICTORIA SECRET PEACH SQUEEZE T
+Victorias Secret very sexy Top
+V.S.BOMBSHELL SUNDRECET
+V.SCRET BOMBSHELL T
+V.SECRET BARE
+V.SECRET BOMBSHELL BEACH
+V.SECRET CELABRATION TOP
+V.SECRET ROSE BERGAMOT T
+V.SECRET SCANDALOUS T
+V.SECRET VERY SEXY PLATINUM
+WHITE MUSK
+XERJOFF GRAN BALLO T
+XERJOFF MORE THAN WORDS
+XERJOFF NAXOS 1861 UNI
+XERJOFF.C.1888 LIRA
+YASEMEN
+Y.S.L BLACK OPIUM T
+Y.S.L BLACK OPIUM TOP
+YSL LIBRE W ( HUREM SULTAN ) T
+Y.S.L MON PARIS
+Y.S.L OPIUM
+Y.S.L. Y FOR MEN
+ZADIG VOLTAIRE HER
+ZARKO PERFUME MOLECULE 234.38 T
+ZIELENSKI BLACK PEPPER & AMBER
+ZIELENSKI FICTION
+ZIELENSKI LEMONGRASS & VETIVER
+ZIELENSKI OAKMOSS & AMBERR
+ZIELENSKI ROSEMARY & LEMON
+ZIELENSKI VANILE & JASMINE ORANGE T
+ZIELENSKI VANILLA&BLEND TOP
+ZODIAC GIRL CAN SAY ANYTHY`.split("\n");
+const MARQ=["Montale","Kilian","Creed","Chanel","Byredo","Tom Ford","Xerjoff","Nasomatto","Le Labo","Amouage","Initio","Parfums de Marly","Orto Parisi","Ex Nihilo","Memo","Jo Malone","Tiziana Terenzi","Mancera","Roja","Sospiro"];
+
+/* ------------------------------------------------------------------ STATE */
+let lang="uz";
+const $=s=>document.querySelector(s);
+const t=k=>L[lang][k];
+const tn=n=>{const e=NT[n];return e?(lang==="uz"?n:e[lang==="ru"?0:1]):n};
+const money=k=>(k*1000).toLocaleString("en-US").replace(/,/g,".");
+
+/* ------------------------------------------------------------------ THREE */
+const GW=1100,GH=1100;
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"high-performance"});
+renderer.setPixelRatio(1);renderer.setSize(GW,GH,false);
+renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+renderer.setClearColor(0x000000,0);
+renderer.setScissorTest(true);
+const GLC=renderer.domElement;
+
+const ENV=(()=>{
+  const c=document.createElement("canvas");c.width=1024;c.height=512;const x=c.getContext("2d");
+  const g=x.createLinearGradient(0,0,0,512);g.addColorStop(0,"#ffffff");g.addColorStop(.5,"#8c9099");g.addColorStop(1,"#2b231c");
+  x.fillStyle=g;x.fillRect(0,0,1024,512);
+  x.fillStyle="#fff";[[90,70,150,220],[400,40,220,120],[760,80,140,230]].forEach(r=>x.fillRect(...r));
+  x.fillStyle="#ffd9a0";x.fillRect(580,250,280,60);
+  const tex=new THREE.CanvasTexture(c);tex.mapping=THREE.EquirectangularReflectionMapping;tex.encoding=THREE.sRGBEncoding;
+  const pm=new THREE.PMREMGenerator(renderer);const e=pm.fromEquirectangular(tex).texture;tex.dispose();pm.dispose();return e;
+})();
+
+const MG=(c,r=.24)=>new THREE.MeshStandardMaterial({color:c,metalness:1,roughness:r,envMapIntensity:1.25});
+const GL=()=>new THREE.MeshPhysicalMaterial({color:0xffffff,metalness:0,roughness:.04,transparent:true,opacity:.22,clearcoat:1,clearcoatRoughness:.05,envMapIntensity:1.7,depthWrite:false});
+const LQ=c=>new THREE.MeshPhysicalMaterial({color:c,roughness:.12,metalness:0,clearcoat:.8,transparent:true,opacity:.93,envMapIntensity:1,emissive:c,emissiveIntensity:.12});
+const OP=(c,r=.2)=>new THREE.MeshPhysicalMaterial({color:c,roughness:r,metalness:.1,clearcoat:1,clearcoatRoughness:.08,envMapIntensity:1.3});
+const bright=h=>{const n=parseInt(h.slice(1),16);return ((n>>16)&255)*.3+((n>>8)&255)*.59+(n&255)*.11};
+const capMat=c=>bright(c)>95?MG(c):OP(c,.15);
+
+function rr(w,h,r){const s=new THREE.Shape(),x=-w/2,y=-h/2;
+  s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s}
+function slab(w,h,d,r,b){const g=new THREE.ExtrudeGeometry(rr(w,h,r),{depth:d,bevelEnabled:true,bevelSize:b,bevelThickness:b,bevelSegments:5,curveSegments:10});g.translate(0,0,-d/2);return g}
+function wrapTxt(x,s,cx,cy,mw,lh){const w=s.split(" ");const lines=[];let l="";
+  w.forEach(p=>{const tt=l?l+" "+p:p;if(x.measureText(tt).width>mw&&l){lines.push(l);l=p}else l=tt});lines.push(l);
+  const y0=cy-(lines.length-1)*lh/2;lines.forEach((q,i)=>x.fillText(q,cx,y0+i*lh))}
+function labelTex(brand,name,o={}){
+  const W=512,H=o.h||512,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d");
+  x.fillStyle=o.bg||"#f7f5f0";x.fillRect(0,0,W,H);
+  if(o.border){x.strokeStyle=o.border;x.lineWidth=6;x.strokeRect(16,16,W-32,H-32);x.lineWidth=2;x.strokeRect(28,28,W-56,H-56)}
+  x.fillStyle=o.fg||"#141210";x.textAlign="center";x.textBaseline="middle";
+  const ser='"Cormorant Garamond",Georgia,"Times New Roman",serif';let y=H/2;
+  if(brand){x.font="600 "+Math.round(H*(brand.length>14?.065:.085))+"px "+ser;x.fillText(brand.split("").join("\u200A"),W/2,H*.3);y=H*.6}
+  const fs=name.length>14?Math.round(H*.1):name.length>9?Math.round(H*.125):Math.round(H*.15);
+  x.font="600 "+fs+"px "+ser;wrapTxt(x,name,W/2,y,W-120,fs*1.08);
+  const tex=new THREE.CanvasTexture(c);tex.encoding=THREE.sRGBEncoding;tex.anisotropy=8;return tex}
+const labMat=tex=>new THREE.MeshStandardMaterial({map:tex,roughness:.55,metalness:0});
+function wrapLabel(r,h,y,tex,arc){const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,48,1,true,-arc/2,arc),labMat(tex));m.position.y=y;return m}
+const cyl=(r1,r2,h,m,y,seg=48)=>{const o=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),m);o.position.y=y;return o};
+const lathe=(pts,m)=>new THREE.Mesh(new THREE.LatheGeometry(pts.map(p=>new THREE.Vector2(p[0],p[1])),64),m);
+
+function build(s){
+  const g=new THREE.Group();
+  const lt=(h)=>labelTex(s.lab[0],s.lab[1],{bg:s.lb,fg:s.lf,border:s.lbd,h});
+  if(s.t==="box"){
+    const body=new THREE.Mesh(slab(1.5,1.5,.75,.16,.07),s.o?OP(s.o,.12):GL());body.renderOrder=2;g.add(body);
+    if(!s.o){const l=new THREE.Mesh(slab(1.3,1.15,.55,.1,.05),LQ(s.l));l.position.y=-.12;l.renderOrder=1;g.add(l)}
+    g.add(cyl(.2,.2,.18,MG("#b9bec6"),.9,32));
+    const cap=cyl(.36,.36,.62,capMat(s.c),1.3,56);g.add(cap);
+    g.add(cyl(.385,.385,.05,MG("#d1a85a",.2),1.0,56));
+    const lab=new THREE.Mesh(new THREE.PlaneGeometry(.95,.95),labMat(lt(512)));lab.position.set(0,-.06,.375+.075);g.add(lab);
+  }else if(s.t==="cyl"){
+    const body=new THREE.Mesh(new THREE.CylinderGeometry(.78,.78,1.5,64),GL());body.renderOrder=2;g.add(body);
+    const l=cyl(.7,.7,1.15,LQ(s.l),-.12,64);l.renderOrder=1;g.add(l);
+    g.add(cyl(.78,.78,.16,OP("#e8ecef",.05),-.67,64));
+    g.add(cyl(.4,.4,.34,capMat(s.c),.94));
+    const dome=new THREE.Mesh(new THREE.SphereGeometry(.4,48,24,0,Math.PI*2,0,Math.PI/2),capMat(s.c));dome.position.y=1.11;g.add(dome);
+    g.add(wrapLabel(.79,.72,-.1,labelTex(s.lab[0],s.lab[1],{bg:s.lb,fg:s.lf,h:320}),1.7));
+  }else if(s.t==="flask"){
+    const body=lathe([[0,-1.1],[.6,-1.1],[.66,-1.04],[.68,-.9],[.68,.5],[.6,.68],[.34,.8],[.3,.86],[0,.86]],MG(s.m,.2));g.add(body);
+    g.add(cyl(.33,.33,.12,MG("#7d8087",.3),.92));
+    g.add(cyl(.26,.26,.34,MG("#a9aeb6",.25),1.12));
+    g.add(cyl(.2,.2,.14,OP("#16171a"),1.34));
+    g.add(wrapLabel(.685,.58,-.45,labelTex(s.lab[0],s.lab[1],{bg:s.lb,fg:s.lf||"#141210",h:300}),1.9));
+  }else if(s.t==="disc"){
+    const sg=new THREE.Mesh(new THREE.SphereGeometry(.95,64,48),GL());sg.scale.set(1,1.08,.5);sg.renderOrder=2;g.add(sg);
+    const sl=new THREE.Mesh(new THREE.SphereGeometry(.86,64,48),LQ(s.l));sl.scale.set(1,1.0,.42);sl.renderOrder=1;g.add(sl);
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(.97,.03,16,120),MG("#d6aa4a",.2));ring.scale.y=1.08;g.add(ring);
+    g.add(cyl(.2,.22,.24,MG("#d6aa4a",.2),1.1,32));
+    g.add(cyl(.3,.3,.46,capMat(s.c),1.46,48));
+    const lab=new THREE.Mesh(new THREE.PlaneGeometry(.78,.55),labMat(labelTex(s.lab[0],s.lab[1],{bg:s.lb,fg:s.lf,h:360})));lab.position.set(0,-.05,.5);g.add(lab);
+  }else if(s.t==="creed"){
+    g.add(lathe([[0,-1],[.72,-1],[.8,-.94],[.82,-.8],[.82,.2],[.7,.5],[.36,.72],[.26,.8],[0,.8]],OP("#0b0b0d",.12)));
+    g.add(cyl(.25,.25,.1,MG("#9fa4ac"),.85,32));
+    g.add(cyl(.42,.3,.78,MG(s.m,.18),1.26,8));
+    g.add(cyl(.3,.18,.2,MG(s.m,.18),1.76,8));
+    g.add(wrapLabel(.825,.55,-.35,labelTex(s.lab[0],s.lab[1],{bg:s.lb,fg:"#111",h:300}),1.5));
+  }else if(s.t==="crest"){
+    g.add(lathe([[0,-1],[.5,-1],[.78,-.7],[.86,-.2],[.78,.3],[.5,.62],[.28,.74],[0,.74]],OP("#0b0a09",.1)));
+    const band=new THREE.Mesh(new THREE.TorusGeometry(.8,.035,12,80),MG("#d6aa4a",.2));band.rotation.x=Math.PI/2;band.position.y=.1;g.add(band);
+    const band2=band.clone();band2.position.y=-.65;band2.scale.setScalar(.88);g.add(band2);
+    g.add(wrapLabel(.865,.62,-.2,labelTex(s.lab[0],s.lab[1],{bg:"#0b0a09",fg:"#d8b45a",border:"#d8b45a",h:300}),1.4));
+    g.add(cyl(.27,.33,.22,MG("#d6aa4a",.18),.85,16));
+    g.add(cyl(.36,.44,.38,MG("#d6aa4a",.18),1.14,16));
+    for(let i=0;i<8;i++){const a=i/8*Math.PI*2;const sp=new THREE.Mesh(new THREE.ConeGeometry(.07,.24,10),MG("#d6aa4a",.18));sp.position.set(Math.cos(a)*.4,1.44,Math.sin(a)*.4);g.add(sp)}
+    const orb=new THREE.Mesh(new THREE.SphereGeometry(.13,24,16),MG("#e2bd63",.15));orb.position.y=1.43;g.add(orb);
+  }
+  return g;
+}
+
+function disposeObj(o){o.traverse(n=>{if(n.geometry)n.geometry.dispose();if(n.material){(Array.isArray(n.material)?n.material:[n.material]).forEach(m=>{if(m.map)m.map.dispose();m.dispose()})}})}
+
+/* one shared scene: bottles are rendered one by one into an offscreen GL canvas,
+   then copied into each card's own 2D canvas -> scrolls natively, no desync/lag */
+const scene=new THREE.Scene();scene.environment=ENV;
+const cam=new THREE.PerspectiveCamera(28,1,.1,60);cam.position.set(0,.3,7.6);cam.lookAt(0,-.05,0);
+scene.add(new THREE.AmbientLight(0xffffff,.35));
+{const k=new THREE.DirectionalLight(0xfff1d6,1.3);k.position.set(3,4,5);scene.add(k);
+ const r=new THREE.PointLight(0xffc27a,1.3,20);r.position.set(-4,2,-3);scene.add(r)}
+const ped=new THREE.Mesh(new THREE.CylinderGeometry(1.3,1.42,.1,64),MG("#c9a45b",.3));ped.position.y=-1.3;scene.add(ped);
+const ped2=new THREE.Mesh(new THREE.TorusGeometry(1.36,.018,8,80),new THREE.MeshBasicMaterial({color:0xf3d28b}));ped2.rotation.x=Math.PI/2;ped2.position.y=-1.245;scene.add(ped2);
+{const c=document.createElement("canvas");c.width=c.height=128;const x=c.getContext("2d");
+ const g=x.createRadialGradient(64,64,4,64,64,64);g.addColorStop(0,"rgba(0,0,0,.6)");g.addColorStop(1,"rgba(0,0,0,0)");x.fillStyle=g;x.fillRect(0,0,128,128);
+ const sh=new THREE.Mesh(new THREE.PlaneGeometry(3,3),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));
+ sh.rotation.x=-Math.PI/2;sh.position.y=-1.24;scene.add(sh)}
+const pts=(()=>{const N=60,pa=new Float32Array(N*3);
+  for(let i=0;i<N;i++){const a=Math.random()*6.283,rad=1.2+Math.random()*1.1;pa[i*3]=Math.cos(a)*rad;pa[i*3+1]=-1.3+Math.random()*2.8;pa[i*3+2]=Math.sin(a)*rad}
+  const g=new THREE.BufferGeometry();g.setAttribute("position",new THREE.BufferAttribute(pa,3));
+  const p=new THREE.Points(g,new THREE.PointsMaterial({color:0xd9a441,size:.045,transparent:true,opacity:.85,depthWrite:false}));scene.add(p);return p})();
+
+const cache=new Map();
+function makeGroup(spec){
+  const b=build(spec);const box=new THREE.Box3().setFromObject(b);const h=box.max.y-box.min.y;
+  b.position.y=-(box.min.y+box.max.y)/2;const w=new THREE.Group();w.add(b);w.userData.base=2.35/h;w.visible=false;scene.add(w);return w}
+function getGroup(spec,keep=true){
+  if(keep&&cache.has(spec))return cache.get(spec);
+  const g=makeGroup(spec);if(keep)cache.set(spec,g);return g}
+function warm(spec){ /* upload textures + compile shaders ahead of time, off-screen */
+  const g=getGroup(spec);if(g.userData.warm)return;g.userData.warm=1;g.visible=true;
+  renderer.setViewport(0,0,64,64);renderer.setScissor(0,0,64,64);renderer.render(scene,cam);g.visible=false}
+
+const VIEWS=new Set();let modal=null;
+function sizeView(v){
+  const r=v.el.getBoundingClientRect();if(r.width<2||r.height<2)return;
+  const dpr=Math.min(devicePixelRatio||1,v.opt.hero?2:1.6);
+  let w=r.width*dpr,h=r.height*dpr;const m=Math.min(1,GW/Math.max(w,h));w=Math.round(w*m);h=Math.round(h*m);
+  if(v.cv.width!==w||v.cv.height!==h){v.cv.width=w;v.cv.height=h}v.pw=w;v.ph=h}
+function mkView(el,spec,opt={}){
+  const cv=document.createElement("canvas");cv.className="vc";el.prepend(cv);
+  const v={el,cv,ctx:cv.getContext("2d"),spec,opt,vis:false,rot:Math.random()*6,vel:.55,hx:0,hy:0,sm:0,smy:0,app:0,group:null,base:1,leaving:false,pw:0,ph:0,drag:false,fx:null,pump:0,lab:null,tm:0};
+  v.ro=new ResizeObserver(()=>sizeView(v));v.ro.observe(el);
+  v.io=new IntersectionObserver(es=>{v.vis=es[es.length-1].isIntersecting;if(v.vis&&!v.group){v.group=getGroup(v.spec,!opt.nocache);v.base=v.group.userData.base;v.app=0}},{rootMargin:"150px"});v.io.observe(el);
+  v.lab=document.createElement("span");v.lab.className="fxname";el.appendChild(v.lab);sizeView(v);attach(v);VIEWS.add(v);return v}
+function destroyView(v){v.io.disconnect();v.ro.disconnect();VIEWS.delete(v);v.cv.remove();
+  if(v.opt.nocache&&v.group){scene.remove(v.group);disposeObj(v.group)}}
+function attach(v){
+  const el=v.el;let lt=0,lx=0,sx=0,sy=0,st=0,moved=0;
+  el.addEventListener("pointerdown",e=>{v.drag=true;lx=sx=e.clientX;sy=e.clientY;lt=st=performance.now();moved=0;v.vel=0;try{el.setPointerCapture(e.pointerId)}catch(_){}});
+  el.addEventListener("pointermove",e=>{
+    const r=el.getBoundingClientRect();v.hx=(e.clientX-r.left)/r.width-.5;v.hy=(e.clientY-r.top)/r.height-.5;
+    if(v.drag){const n=performance.now(),dx=(e.clientX-lx)*.012;v.rot+=dx;moved=Math.max(moved,Math.abs(e.clientX-sx)+Math.abs(e.clientY-sy));
+      v.vel=Math.max(-14,Math.min(14,dx/Math.max(.008,(n-lt)/1000)));lx=e.clientX;lt=n}});
+  el.addEventListener("pointerup",()=>{if(v.drag&&moved<8&&performance.now()-st<400)spray(v);v.drag=false});
+  el.addEventListener("pointercancel",()=>{v.drag=false});
+  el.addEventListener("pointerleave",()=>{v.hx=0;v.hy=0});
+}
+const easeOutBack=x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+
+/* ---------------- spray engine (2D particles drawn on top of each bottle canvas) ---------------- */
+let soundOn=true;
+const LI=()=>({uz:0,ru:1,en:2})[lang];
+const ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="9" height="10" rx="2"/><path d="M6 11V8h4v3M10 8h3"/><circle cx="17" cy="7" r=".6"/><circle cx="19.5" cy="9.5" r=".6"/><circle cx="18" cy="11.5" r=".6"/><circle cx="21" cy="6" r=".6"/></svg>';
+function parseSty(a){const[ks,cs,d,spd,g,life,size,nm]=a;
+  return{k:ks.split(",").map(x=>{const[n,w]=x.split(":");return[n,+w]}),col:cs.split(","),d,spd,g,life,size,nm:nm.split("|"),rate:85,dur:.95}}
+const STY=[
+["smoke:.7,ember:.3","#8d6a46,#5b432c,#d99a4a","R",170,-30,2.4,26,"Tuproq tutuni|Дым земли|Earth smoke"],
+["bubble:.55,mist:.3,drop:.15","#7fd0e8,#2f7f96,#d7f4ff","B",150,-50,2.2,26,"Dengiz ko'pigi|Морская пена|Sea foam"],
+["bean:.35,smoke:.65","#5a3a22,#c9a27a,#e8d5bd","D",190,320,2.2,26,"Qahva yomg'iri|Кофейный дождь|Coffee rain"],
+["spark:.5,fluff:.5","#e3b04b,#f6dc9b,#c8873a","S",190,-10,2.4,26,"Sahro changi|Песок пустыни|Desert dust"],
+["leaf:.55,smoke:.45","#3f8a4f,#1f4a2e,#8fbf7a","B",190,90,2.4,26,"O'rmon barglari|Лесные листья|Forest leaves"],
+["drop:.45,ember:.55","#e8a23a,#c4701a,#ffd37a","U",190,-90,2.2,26,"Farishta ulushi|Доля ангелов|Angels' share"],
+["smoke:.7,shard:.3","#6a6a74,#9a9aa3,#c9c9d1","R",180,-20,2.6,26,"Qora sharpa|Чёрный призрак|Black phantom"],
+["star:.55,mist:.45","#a24ab8,#e060b0,#f0c35a","S",200,-20,2.4,26,"Sehrli yulduzlar|Волшебные звёзды|Magic stars"],
+["shard:.5,smoke:.5","#cfd3da,#8e949e,#e8ebef","R",260,-10,2.0,26,"Kumush bo'ron|Серебряный шторм|Silver storm"],
+["shard:.3,fluff:.4,spark:.3","#bfc5ce,#e9ecef,#d8b45a","B",220,-10,2.2,26,"Qirollik shamoli|Королевский ветер|Royal wind"],
+["petal:.7,spark:.3","#f4a7bb,#f9d0da,#ffffff","B",200,60,2.6,26,"Pushti gulbarglar|Розовые лепестки|Pink petals"],
+["spark:.5,drop:.3,ring:.2","#d8b45a,#f3e2b0,#a07a2a","D",170,200,2.2,26,"Oltin marvarid|Золотой жемчуг|Golden pearls"],
+["shard:.55,ring:.45","#dfe3ea,#a9b0bc,#ffffff","B",230,0,1.8,26,"Platina qirralari|Платиновые грани|Platinum shards"],
+["leaf:.4,bubble:.2,smoke:.4","#8aa66a,#e7d49f,#bcd6c0","R",200,-20,2.4,26,"Sayyor shamoli|Ветер странника|Wanderer's breeze"],
+["petal:.85,mist:.15","#f08aa0,#f7b6c2,#8bbf6a","D",150,150,2.8,26,"Lola yomg'iri|Тюльпановый дождь|Tulip rain"],
+["ring:.35,fluff:.45,spark:.2","#c9b8e8,#dfe8e1,#9aa8d0","U",150,-30,2.6,26,"Sahro arvohi|Призрак пустыни|Desert ghost"],
+["thread:.5,spark:.3,mist:.2","#d94a48,#f0a15a,#ffd37a","B",210,20,2.2,26,"Za'faron iplari|Шафрановые нити|Saffron threads"],
+["fluff:.8,mist:.2","#ffffff,#e9e4da,#d8d2c4","U",110,-20,3.0,26,"Oq tutun|Белый дым|White smoke"],
+["ember:.55,smoke:.45","#c98a3a,#6b4423,#ffcf7a","R",180,-50,2.4,26,"Cho'g' va yog'och|Угли и дерево|Embers & wood"],
+["petal:.4,fluff:.3,spark:.3","#cfe08a,#f1f5d6,#b8d070","B",180,30,2.6,26,"Tilia gullari|Цветки липы|Linden blossoms"],
+["fluff:.7,spark:.3","#ffffff,#f1ece2,#e8d9a8","U",120,-20,3.0,26,"Oq mushk bulutlari|Облака белого мускуса|White musk clouds"],
+["ember:.6,spark:.4","#d98a2a,#ffcf6a,#a8561a","R",200,-40,2.2,26,"Amber uchqunlari|Янтарные искры|Amber sparks"],
+["drop:.3,bubble:.3,mist:.4","#86c7e8,#d8f1ff,#3c8fc0","R",240,40,2.2,26,"Okean purkagi|Морские брызги|Ocean spray"],
+["ember:.4,spark:.3,mist:.3","#c98a5a,#e8b58a,#f0d0a8","B",190,-20,2.4,26,"Issiq kashtan|Тёплый каштан|Warm chestnut"],
+["flame:.6,ember:.4","#ff8a1f,#ffcf4a,#d93a1a","U",200,-130,1.8,26,"Muqaddas olov|Священное пламя|Sacred flame"]
+].map(parseSty);
+const KMUL={mist:1.8,smoke:2.2,fluff:2,spark:.7,star:.8,shard:1.1,petal:.9,leaf:1,bubble:.7,drop:.6,bean:.8,thread:1.2,ring:1.2,ember:.6,flame:1.4};
+const SPR=new Map();
+function sprite(col){let c=SPR.get(col);if(c)return c;c=document.createElement("canvas");c.width=c.height=64;const x=c.getContext("2d");
+  const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,col);g.addColorStop(.35,col+"aa");g.addColorStop(1,col+"00");x.fillStyle=g;x.fillRect(0,0,64,64);SPR.set(col,c);return c}
+function pick(k){let r=Math.random(),s=0;for(const[n,w]of k){s+=w;if(r<=s)return n}return k[0][0]}
+function spawn(v,light){
+  const f=v.fx,st=f.st,sc=v.pw/360,w=v.pw,h=v.ph,k=pick(st.k);
+  let col=st.col[(Math.random()*st.col.length)|0];
+  if(light&&bright(col)>205)col="#cbb98e";
+  let x=w*.5,y=h*.22,a,sp=st.spd*sc*(.45+Math.random()*.8);
+  switch(st.d){
+    case"R":a=-.5+(Math.random()-.5)*.9;break;
+    case"L":a=Math.PI+.5+(Math.random()-.5)*.9;break;
+    case"U":a=-Math.PI/2+(Math.random()-.5)*1.1;break;
+    case"B":a=Math.random()*6.283;break;
+    case"S":f.sw=(f.sw||0)+.55;a=f.sw+(Math.random()-.5)*.3;break;
+    default:x=w*(.22+Math.random()*.56);y=-10*sc;a=Math.PI/2+(Math.random()-.5)*.25;sp=st.spd*sc*(.3+Math.random()*.5);
+  }
+  f.parts.push({k,c:col,x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,t:0,life:st.life*(.6+Math.random()*.6),z:st.size*(KMUL[k]||1)*sc*(.55+Math.random()*.7),a:.55+Math.random()*.4,ph:Math.random()*6.28,r:Math.random()*6.28,vr:(Math.random()-.5)*5,g:st.g*sc});
+}
+function star(c,x,y,r,n,col,rot){c.fillStyle=col;c.beginPath();for(let i=0;i<n*2;i++){const a=rot+i*Math.PI/n,rr=i%2?r*(n===4?.22:.45):r;c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}c.closePath();c.fill()}
+function drawP(c,p,q,light){
+  const z=p.z,a=(1-q)*p.a,fi=Math.min(1,p.t*7);
+  c.globalCompositeOperation=(!light&&(p.k==="spark"||p.k==="ember"||p.k==="flame"||p.k==="star"||p.k==="ring"))?"lighter":"source-over";
+  switch(p.k){
+  case"mist":case"smoke":case"fluff":{const s=z*(1+q*(p.k==="smoke"?2.4:1.6));c.globalAlpha=a*(p.k==="mist"?.55:.7)*fi;c.drawImage(sprite(p.c),p.x-s/2,p.y-s/2,s,s);break}
+  case"ember":{c.globalAlpha=a*fi;c.drawImage(sprite(p.c),p.x-z,p.y-z,z*2,z*2);break}
+  case"flame":{c.globalAlpha=a*fi;const s=z*(1-q*.5);c.save();c.translate(p.x,p.y);c.scale(.7,1.5);c.drawImage(sprite(p.c),-s/2,-s/2,s,s);c.restore();break}
+  case"spark":{c.globalAlpha=a*(.5+.5*Math.sin(p.t*16+p.ph));star(c,p.x,p.y,z*.5,4,p.c,p.r);break}
+  case"star":{c.globalAlpha=a*(.6+.4*Math.sin(p.t*10+p.ph));star(c,p.x,p.y,z*.5,5,p.c,p.r);break}
+  case"shard":{c.globalAlpha=a*(.4+.6*Math.abs(Math.sin(p.t*9+p.ph)));c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.beginPath();c.moveTo(0,-z*.5);c.lineTo(z*.1,0);c.lineTo(0,z*.5);c.lineTo(-z*.1,0);c.closePath();c.fill();c.restore();break}
+  case"petal":{c.globalAlpha=a*fi;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.scale(1,.55+.45*Math.abs(Math.sin(p.t*3+p.ph)));c.fillStyle=p.c;c.beginPath();c.moveTo(0,-z*.5);c.bezierCurveTo(z*.45,-z*.5,z*.45,z*.3,0,z*.5);c.bezierCurveTo(-z*.45,z*.3,-z*.45,-z*.5,0,-z*.5);c.fill();c.restore();break}
+  case"leaf":{c.globalAlpha=a*fi;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.beginPath();c.moveTo(0,-z*.5);c.quadraticCurveTo(z*.35,0,0,z*.5);c.quadraticCurveTo(-z*.35,0,0,-z*.5);c.fill();c.restore();break}
+  case"bubble":{c.globalAlpha=a*fi;c.strokeStyle=p.c;c.lineWidth=Math.max(1,z*.07);c.beginPath();c.arc(p.x,p.y,z*.5,0,6.283);c.stroke();c.globalAlpha=a*fi*.18;c.fillStyle=p.c;c.fill();c.globalAlpha=a*fi*.8;c.fillStyle="#ffffff";c.beginPath();c.arc(p.x-z*.17,p.y-z*.17,z*.07,0,6.283);c.fill();break}
+  case"drop":{c.globalAlpha=a*fi;c.save();c.translate(p.x,p.y);c.rotate(Math.atan2(p.vy,p.vx));c.fillStyle=p.c;c.beginPath();c.ellipse(0,0,z*.5,z*.28,0,0,6.283);c.fill();c.restore();break}
+  case"bean":{c.globalAlpha=a*fi;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.fillStyle=p.c;c.beginPath();c.ellipse(0,0,z*.5,z*.32,0,0,6.283);c.fill();c.strokeStyle="#e8d5bd";c.globalAlpha=a*fi*.6;c.lineWidth=Math.max(1,z*.06);c.beginPath();c.moveTo(-z*.4,0);c.quadraticCurveTo(0,z*.12,z*.4,0);c.stroke();c.restore();break}
+  case"thread":{c.globalAlpha=a*fi;c.save();c.translate(p.x,p.y);c.rotate(p.r);c.strokeStyle=p.c;c.lineWidth=Math.max(1.2,z*.07);c.lineCap="round";c.beginPath();c.moveTo(-z*.5,0);c.quadraticCurveTo(0,-z*.4*Math.sin(p.t*6+p.ph),z*.5,0);c.stroke();c.restore();break}
+  case"ring":{c.globalAlpha=a*.8;c.strokeStyle=p.c;c.lineWidth=Math.max(1,z*.05);c.beginPath();c.arc(p.x,p.y,z*(.3+q*2),0,6.283);c.stroke();break}
+  }
+}
+function drawFx(v,dt){
+  const f=v.fx;if(!f)return;const c=v.ctx,P=f.parts,light=document.documentElement.dataset.theme==="light";
+  if(f.emit>0){f.emit-=dt;f.acc+=f.st.rate*dt;while(f.acc>=1){f.acc--;if(P.length<260)spawn(v,light)}}
+  for(let i=P.length-1;i>=0;i--){
+    const p=P[i];p.t+=dt;if(p.t>=p.life){P[i]=P[P.length-1];P.pop();continue}
+    const sw=(p.k==="smoke"||p.k==="fluff"||p.k==="mist"||p.k==="leaf"||p.k==="petal")?1:0,dr=Math.min(1,dt*(sw?1.4:.6)),sc=v.pw/360;
+    p.vx-=p.vx*dr;p.vy-=p.vy*dr;p.vy+=p.g*dt;
+    p.x+=p.vx*dt+(sw?Math.sin(p.t*3+p.ph)*16*sc*dt:0);p.y+=p.vy*dt;p.r+=p.vr*dt;
+    drawP(c,p,p.t/p.life,light);
+  }
+  c.globalAlpha=1;c.globalCompositeOperation="source-over";
+  if(!P.length&&f.emit<=0)v.fx=null;
+}
+let AC=null;
+function psst(){
+  if(!soundOn)return;
+  try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
+    const len=Math.floor(AC.sampleRate*.5),buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2);
+    const s=AC.createBufferSource();s.buffer=buf;const hp=AC.createBiquadFilter();hp.type="highpass";hp.frequency.value=2800;
+    const g=AC.createGain();g.gain.value=.08;s.connect(hp);hp.connect(g);g.connect(AC.destination);s.start()}catch(e){}
+}
+function spray(v,quiet){
+  if(!v||!v.group||!v.vis)return;
+  const st=STY[(v.spec.si||0)%STY.length];
+  v.fx={st,emit:st.dur,acc:0,parts:[],sw:Math.random()*6};v.pump=1;
+  v.el.style.setProperty("--ac",st.col[0]+"66");v.el.classList.add("sprayed");
+  v.lab.textContent=st.nm[LI()];v.lab.classList.add("show");
+  clearTimeout(v.tm);v.tm=setTimeout(()=>{v.el.classList.remove("sprayed");v.lab.classList.remove("show")},2800);
+  if(!quiet){psst();try{navigator.vibrate&&navigator.vibrate(18)}catch(e){}}
+  if(v.opt.onSpray)v.opt.onSpray(v);
+}
+function lightNotes(card){
+  const rows=[...card.querySelectorAll(".notes div")];(card._tm||[]).forEach(clearTimeout);
+  rows.forEach(r=>r.classList.remove("lit"));
+  card._tm=rows.map((r,i)=>setTimeout(()=>r.classList.add("lit"),150+i*1500));
+  card._tm.push(setTimeout(()=>rows.forEach(r=>r.classList.remove("lit")),6500));
+}
+let last=performance.now();
+function frame(now){
+  requestAnimationFrame(frame);
+  const dt=Math.min((now-last)/1000,.05);last=now;const time=now/1000;
+  pts.rotation.y=time*.12;pts.position.y=Math.sin(time*.6)*.06;
+  for(const v of (modal?[modal]:VIEWS)){
+    if(!v.vis||!v.group||!v.pw)continue;
+    if(v.leaving){v.app-=dt*3.2;v.vel=9;if(v.app<=0){v.app=0;v.leaving=false;v.opt.onSwap(v)}}
+    else if(v.app<1)v.app=Math.min(1,v.app+dt*1.4);
+    if(!v.drag)v.vel+=((reduce?0:.55)-v.vel)*Math.min(1,dt*2);
+    v.rot+=v.vel*dt;
+    v.sm+=(v.hx-v.sm)*Math.min(1,dt*6);v.smy+=(v.hy-v.smy)*Math.min(1,dt*6);
+    const g=v.group;g.visible=true;v.pump=Math.max(0,v.pump-dt*2.4);const pu=v.pump;
+    g.rotation.y=v.rot+v.sm*.9;g.rotation.x=v.smy*.14;g.rotation.z=Math.sin(time*46)*.025*pu;
+    g.position.y=Math.sin(time*1.2+v.rot*.1)*.04-.07*pu;
+    g.scale.setScalar(v.base*Math.max(.0001,easeOutBack(v.app)));
+    cam.aspect=v.pw/v.ph;cam.updateProjectionMatrix();
+    renderer.setViewport(0,0,v.pw,v.ph);renderer.setScissor(0,0,v.pw,v.ph);
+    renderer.render(scene,cam);
+    v.ctx.clearRect(0,0,v.pw,v.ph);v.ctx.drawImage(GLC,0,GH-v.ph,v.pw,v.ph,0,0,v.pw,v.ph);drawFx(v,dt);
+    g.visible=false;
+  }
+}
+
+/* ------------------------------------------------------------------ UI */
+const HERO=[0,2,5,8,10,16,6,22];
+let heroIdx=0;
+const heroView=mkView($("#heroView"),F[HERO[0]],{hero:true,onSwap(v){
+  heroIdx=(heroIdx+1)%HERO.length;v.spec=F[HERO[heroIdx]];v.group=getGroup(v.spec);v.base=v.group.userData.base;capHero();setTimeout(()=>{if(heroView.vis&&!modal)spray(heroView,true)},1100)}});
+function capHero(){const f=F[HERO[heroIdx]];$("#heroCap").innerHTML=(f.b?f.b+" ":"")+f.n+"<small>"+t("drag")+"</small>"}
+setInterval(()=>{if(!modal&&!heroView.drag&&heroView.vis&&!document.hidden)heroView.leaving=true},5200);
+capHero();
+
+$("#heroSpray").onclick=()=>spray(heroView);
+setTimeout(()=>spray(heroView,true),1700);
+$("#snd").onclick=e=>{soundOn=!soundOn;e.currentTarget.classList.toggle("off",!soundOn)};
+$("#mq").innerHTML=[...MARQ,...MARQ].map(x=>x+" <i>✦</i> ").join("");
+
+const grid=$("#grid"),chips=$("#chips");
+const brandCount={};F.forEach(f=>{if(f.b)brandCount[f.b]=(brandCount[f.b]||0)+1});
+const brands=Object.keys(brandCount).filter(b=>brandCount[b]>1);
+let curBrand="*";
+function renderChips(){
+  chips.innerHTML="";
+  const mk=(k,label)=>{const b=document.createElement("button");b.textContent=label;if(curBrand===k)b.className="on";
+    b.onclick=()=>{curBrand=k;renderChips();filterCards()};chips.appendChild(b)};
+  mk("*",t("all"));brands.forEach(b=>mk(b,b));
+}
+function filterCards(){document.querySelectorAll(".card").forEach(c=>{
+  c.classList.toggle("hide",!(curBrand==="*"||c.dataset.b===curBrand))})}
+F.forEach((f,i)=>{
+  const c=document.createElement("article");c.className="card";c.dataset.b=f.b;
+  c.innerHTML=`<div class="vwrap"><div class="view"><span class="tag">${i+1}</span><span class="drag" data-i="drag"></span></div>
+    <button class="sprayBtn">${ICON}<span data-i="spray"></span></button></div>
+  <div class="info">
+    <div><em>${f.b||"ESSA Parfume"}</em><h3>${f.n}</h3></div>
+    <p class="desc" data-d="${i}"></p>
+    <dl class="notes">
+      ${["top","mid","base"].map((k,j)=>`<div><dt data-i="${k}"></dt><dd>${f.N[j].map(n=>`<span data-k="${n}"></span>`).join("")}</dd></div>`).join("")}
+    </dl>
+    <p class="orig"><b data-i="origL"></b><span data-o="${f.o}"></span></p>
+    <table><thead><tr><th data-i="vol"></th><th data-i="price"></th></tr></thead><tbody>
+      ${[10,20,30].map((ml,j)=>`<tr><td>${ml} ml</td><td>${money(f.P[j])} <span data-i="som"></span></td></tr>`).join("")}
+    </tbody></table>
+  </div>`;
+  grid.appendChild(c);
+  const v=mkView(c.querySelector(".view"),f,{onSpray:()=>lightNotes(c)});
+  c.querySelector(".sprayBtn").onclick=()=>spray(v);
+});
+/* pre-build + pre-compile bottles in the background, one at a time, so scrolling never stalls */
+(function idle(i){if(i>=F.length)return;warm(F[i]);setTimeout(()=>idle(i+1),70)})(0);
+setTimeout(()=>{},0);
+
+const list=$("#list"),q=$("#q");
+function genSpec(name,i){
+  let h=0;for(let k=0;k<name.length;k++)h=(h*31+name.charCodeAt(k)+i)>>>0;
+  const liq=["#c47a2c","#2f6f8a","#6b2e4a","#d9b46a","#3c5a3a","#b04a4a","#d9d3c7","#2a1a12","#e0a1b0","#5b4a8a","#8a5a2b","#9ab7a6"];
+  const caps=["#111111","#d1a85a","#c0c4cc","#15130f"];
+  const types=["box","box","cyl","disc","box","cyl"];
+  return {t:types[h%types.length],l:liq[(h>>3)%liq.length],c:caps[(h>>6)%caps.length],lab:["",name],lb:["#f7f5f0","#101010","#efe6cf"][h%3],si:(h>>2)%STY.length};
+}
+function renderList(){
+  const s=q.value.trim().toLowerCase();let n=0;const frag=document.createDocumentFragment();
+  FULL.forEach((name,i)=>{if(s&&!name.toLowerCase().includes(s))return;n++;
+    const b=document.createElement("button");b.innerHTML=`<b>${i+1}</b><span></span>`;b.lastChild.textContent=name;
+    b.onclick=()=>openModal(name,i);frag.appendChild(b)});
+  list.innerHTML="";list.appendChild(frag);
+  $("#count").textContent=s?n+" "+t("res"):"";
+  if(!n)list.innerHTML=`<div class="none">${t("none")}</div>`;
+}
+let qt;q.addEventListener("input",()=>{clearTimeout(qt);qt=setTimeout(renderList,120)});
+
+let mInfo=null;
+function countryOf(name){const u=name.toUpperCase();for(const[k,c]of CTRY)if(u.includes(k))return c;return null}
+function setModalInfo(){
+  if(!modal||!mInfo)return;const li=LI(),cc=countryOf(mInfo.name),parts=[];
+  if(cc)parts.push(`<b>${t("homeL")}</b>${CNAME[cc][li]}`);
+  parts.push(`<b>${t("styleL")}</b>${STY[modal.spec.si].nm[li]}`);
+  const el=$("#mcountry");el.innerHTML=parts.join("");el.hidden=false;
+}
+function openModal(name,i){
+  $("#mno").textContent=t("no")+" "+(i+1);$("#mname").textContent=name;
+  $("#modal").classList.add("open");document.body.classList.add("modal-open");
+  modal=mkView($("#mview"),genSpec(name,i),{hero:true,nocache:true});
+  mInfo={name};setModalInfo();
+  setTimeout(()=>{if(modal)spray(modal,true)},900);
+}
+function closeModal(){
+  $("#modal").classList.remove("open");document.body.classList.remove("modal-open");
+  if(modal){const m=modal;modal=null;destroyView(m)}
+}
+$("#mclose").onclick=closeModal;
+$("#mspray").onclick=()=>modal&&spray(modal);
+document.querySelectorAll(".ic").forEach(e=>e.innerHTML=ICON);
+$("#modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+
+function updTexts(){
+  document.querySelectorAll("[data-d]").forEach(e=>e.textContent=DESC[lang][+e.dataset.d]);
+  document.querySelectorAll("[data-o]").forEach(e=>{const o=ORG[e.dataset.o];e.textContent=o?o[LI()]:""});
+  setModalInfo();
+}
+function applyLang(){
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  document.querySelectorAll("[data-ip]").forEach(e=>e.placeholder=t(e.dataset.ip));
+  document.querySelectorAll("[data-k]").forEach(e=>e.textContent=tn(e.dataset.k));
+  $("#fullS").textContent=t("fullS").replace("{n}",FULL.length);
+  document.querySelectorAll("#langs button").forEach(b=>b.classList.toggle("on",b.dataset.l===lang));
+  renderChips();renderList();capHero();updTexts();
+}
+document.querySelectorAll("#langs button").forEach(b=>b.onclick=()=>{lang=b.dataset.l;applyLang()});
+$("#theme").onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==="dark"?"light":"dark"};
+if(matchMedia("(prefers-color-scheme:light)").matches)document.documentElement.dataset.theme="light";
+
+applyLang();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
